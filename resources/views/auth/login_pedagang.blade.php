@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="main-wrapper">
-    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(../../assets/images/big/auth-bg.jpg) no-repeat center center;">
+    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background-color: #a9d0fc;">
         <div class="auth-box">
             <div id="loginform">
                 <div class="logo">

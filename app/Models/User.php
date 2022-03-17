@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -18,9 +19,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
+        'level',
     ];
 
     /**
@@ -41,4 +43,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getDefaultValues()
+    {
+        return (object) [
+            'nama' => '',
+            'email' => '',
+            'password' => '',
+            'level' => '',
+        ];
+    }
+
+    protected function level(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => ($value == 1) ? 'Admin/Bendahara' : 'Kepala Pasar',
+        );
+    }
 }

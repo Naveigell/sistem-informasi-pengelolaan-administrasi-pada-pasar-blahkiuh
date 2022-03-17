@@ -8,6 +8,7 @@
 <script src="{{ asset('dist/js/app.min.js') }}"></script>
 <script src="{{ asset('dist/js/app.init.mini-sidebar.js') }}"></script>
 <script src="{{ asset('dist/js/app-style-switcher.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <!-- slimscrollbar scrollbar JavaScript -->
 <script src="{{ asset('assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
 <script src="{{ asset('assets/extra-libs/sparkline/sparkline.js') }}"></script>
@@ -29,4 +30,7 @@
 <script src="{{ asset('dist/js/pages/calendar/cal-init.js') }}"></script>
 <script>
     $('#calendar').fullCalendar('option', 'height', 650);
+    $('.select2').select2({
+        width: '100%',
+    });
 </script>
