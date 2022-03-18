@@ -19,7 +19,7 @@
                                 <th>#</th>
                                 <th>Nama</th>
                                 <th>Email</th>
-                                <th>Lokasi</th>
+                                <th>Tempat</th>
                                 <th>No. Telp</th>
                                 <th>Tgl. Bergabung</th>
                                 @if(auth()->user()->level == 'Admin/Bendahara')
@@ -33,7 +33,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->nama }}</td>
                                     <td>{{ $row->email }}</td>
-                                    <td>{{ $row->lokasi }}</td>
+                                    <td>{{ $row->tempat->nama_tempat }}{{ $row->position ? ' - ' . $row->position : '' }}</td>
                                     <td>{{ $row->no_telp }}</td>
                                     <td>{{ $row->tgl_bergabung }}</td>
                                     @if(auth()->user()->level == 'Admin/Bendahara')

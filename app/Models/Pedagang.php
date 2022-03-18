@@ -13,6 +13,7 @@ class Pedagang extends Authenticatable
     protected $table = 'pedagang';
 
     protected $fillable = [
+        'tempat_id',
         'nama',
         'email',
         'password',
@@ -24,11 +25,25 @@ class Pedagang extends Authenticatable
     public static function getDefaultValues()
     {
         return (object) [
+            'tempat_id' => '',
             'nama' => '',
             'email' => '',
             'lokasi' => '',
             'no_telp' => '',
             'tgl_bergabung' => ''
         ];
+    }
+
+    public function tempat()
+    {
+        return $this->belongsTo(Tempat::class);
+    }
+
+    public function setTempatIdAttribute($value)
+    {
+        $max = Pedagang::query()->where('tempat_id', $value)->max('position');
+
+        $this->attributes['tempat_id'] = $value;
+        $this->attributes['position']  = $max ? $max + 1 : 1;
     }
 }

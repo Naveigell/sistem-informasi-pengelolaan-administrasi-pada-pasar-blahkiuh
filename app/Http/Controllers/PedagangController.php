@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pedagang;
+use App\Models\Tempat;
 use Illuminate\Http\Request;
 
 class PedagangController extends Controller
@@ -14,7 +15,7 @@ class PedagangController extends Controller
      */
     public function index()
     {
-        $data['pedagang'] = Pedagang::orderBy('nama', 'asc')->get();
+        $data['pedagang'] = Pedagang::with('tempat')->orderBy('nama', 'asc')->get();
         return view('pedagang.index', $data);
     }
 
@@ -26,6 +27,8 @@ class PedagangController extends Controller
     public function create()
     {
         $data['pedagang'] = Pedagang::getDefaultValues();
+        $data['tempats']  = Tempat::all();
+
         return view('pedagang.form', $data);
     }
 
@@ -38,10 +41,10 @@ class PedagangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'tempat_id' => 'required',
             'nama' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required',
-            'lokasi' => 'required',
             'no_telp' => 'required',
             'tgl_bergabung' => 'required',
         ]);
@@ -86,7 +89,6 @@ class PedagangController extends Controller
         $request->validate([
             'nama' => 'required',
             'email' => 'required',
-            'lokasi' => 'required',
             'no_telp' => 'required',
             'tgl_bergabung' => 'required',
         ]);

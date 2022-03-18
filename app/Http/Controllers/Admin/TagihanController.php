@@ -18,7 +18,7 @@ class TagihanController extends Controller
      */
     public function index()
     {
-        $tagihans = Tagihan::with('pedagang', 'jenisTagihan')->get();
+        $tagihans = Tagihan::with('pedagang', 'tempatKategori')->get();
 
         return view('admin.pages.tagihan.index', compact('tagihans'));
     }
@@ -30,10 +30,9 @@ class TagihanController extends Controller
      */
     public function create()
     {
-        $jenisTagihans = JenisTagihan::all();
-        $pedagangs     = Pedagang::all();
+        $pedagangs = Pedagang::with('tempat.tempatKategori')->get();
 
-        return view('admin.pages.tagihan.form', compact('jenisTagihans', 'pedagangs'));
+        return view('admin.pages.tagihan.form', compact('pedagangs'));
     }
 
     /**
@@ -69,12 +68,11 @@ class TagihanController extends Controller
      */
     public function edit(Tagihan $tagihan)
     {
-        $tagihan->load('pedagang', 'jenisTagihan');
+        $tagihan->load('pedagang.tempat');
 
-        $jenisTagihans = JenisTagihan::all();
-        $pedagangs     = Pedagang::all();
+        $pedagangs     = Pedagang::with('tempat.tempatKategori')->get();
 
-        return view('admin.pages.tagihan.form', compact('tagihan', 'jenisTagihans', 'pedagangs'));
+        return view('admin.pages.tagihan.form', compact('tagihan', 'pedagangs'));
     }
 
     /**

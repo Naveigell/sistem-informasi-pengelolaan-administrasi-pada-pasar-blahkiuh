@@ -10,32 +10,29 @@
                     <div class="card-body">
                         @if(auth()->user()->level == 'Admin/Bendahara')
                             <div class="mb-4">
-                                <a href="{{ route('admin.tagihans.create') }}" class="btn btn-primary">Tambah Tagihan</a>
+                                <a href="{{ route('admin.tempats.create') }}" class="btn btn-primary">Tambah Tempat</a>
                             </div>
                         @endif
                         <table class="table datatable">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Jenis Tagihan</th>
-                                <th>Pedagang</th>
-                                <th>Nominal</th>
+                                <th>Nama Tempat</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($tagihans as $tagihan)
+                                @foreach($tempats as $tempat)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $tagihan->tempatKategori->nama_kategori }}</td>
-                                        <td>{{ $tagihan->pedagang->nama }}</td>
-                                        <td>Rp. {{ number_format($tagihan->nominal, 0, ',', '.') }}</td>
-                                        <td>
-                                            <form action="{{ route('admin.tagihans.destroy', $tagihan) }}" method="post">
+                                        <td class="col-1">{{ $loop->iteration }}</td>
+                                        <td class="col-9">{{ $tempat->nama_tempat }}</td>
+                                        <td class="col-2">
+                                            <form action="{{ route('admin.tempats.destroy', $tempat) }}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                <a href="{{ route('admin.tagihans.edit', $tagihan) }}" class="btn btn-sm btn-warning"><i class="fa fa-cog"></i></a>
+                                                <a href="{{ route('admin.tempats.edit', $tempat) }}" class="btn btn-sm btn-warning"><i class="fa fa-cog"></i></a>
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin untuk menghapus data?')"><i class="fa fa-trash"></i></button>
+                                                <a href="{{ route('admin.tempats.kategori.index', $tempat) }}" class="btn btn-sm btn-info"><i class="fa fa-info"></i></a>
                                             </form>
                                         </td>
                                     </tr>

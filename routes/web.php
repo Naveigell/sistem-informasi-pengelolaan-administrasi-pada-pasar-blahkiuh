@@ -42,6 +42,10 @@ Route::middleware(['auth:pedagang'])->group(function() {
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('tagihans', \App\Http\Controllers\Admin\TagihanController::class);
+    Route::name('tempats.')->prefix('tempats/{tempat}')->group(function () {
+        Route::resource('kategori', \App\Http\Controllers\Admin\TempatKategoriController::class);
+    });
+    Route::resource('tempats', \App\Http\Controllers\Admin\TempatController::class);
 });
 
 Route::middleware(['auth'])->group(function() {

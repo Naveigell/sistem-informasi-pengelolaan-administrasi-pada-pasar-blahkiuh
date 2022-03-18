@@ -60,7 +60,7 @@
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.tagihans.index') ? 'active' : '' }} active" href="{{ route('admin.tagihans.index') }}" aria-expanded="false">
-                            <i class="mdi mdi-paper-cut-vertical"></i>
+                            <i class="mdi mdi-wallet-giftcard"></i>
                             <span class="hide-menu">Tagihan</span>
                         </a>
                     </li>
@@ -80,6 +80,12 @@
                         <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pengeluaran.laporan') ? 'active' : '' }} active" href="{{ route('pengeluaran.laporan') }}" aria-expanded="false">
                             <i class="mdi mdi-paper-cut-vertical"></i>
                             <span class="hide-menu">Laporan Pengeluaran</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.tempats.index') ? 'active' : '' }} active" href="{{ route('admin.tempats.index') }}" aria-expanded="false">
+                            <i class="mdi mdi-map"></i>
+                            <span class="hide-menu">Tempat</span>
                         </a>
                     </li>
                 @else
@@ -104,7 +110,7 @@
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('tagihans.index') ? 'active' : '' }} active" href="{{ route('tagihans.index') }}" aria-expanded="false">
-                            <i class="mdi mdi-paper-cut-vertical"></i>
+                            <i class="mdi mdi-wallet-giftcard"></i>
                             <span class="hide-menu">Tagihan</span>
                         </a>
                     </li>

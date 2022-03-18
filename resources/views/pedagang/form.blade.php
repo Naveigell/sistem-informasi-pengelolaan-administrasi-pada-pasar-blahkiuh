@@ -59,8 +59,12 @@
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Lokasi') }}</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control @error('lokasi') is-invalid @enderror" name="lokasi" value="{{ old('lokasi', $pedagang->lokasi) }}">
-
+                                <select name="tempat_id" class="form-control @error('tempat_id') is-invalid @enderror select2" id="">
+                                    <option value="">-- Nothing Selected --</option>
+                                    @foreach($tempats as $tempat)
+                                        <option value="{{ $tempat->id }}">{{ $tempat->nama_tempat }}</option>
+                                    @endforeach
+                                </select>
                                 @error('lokasi')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

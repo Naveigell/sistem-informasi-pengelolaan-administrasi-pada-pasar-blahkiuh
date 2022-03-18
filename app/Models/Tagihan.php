@@ -10,7 +10,7 @@ class Tagihan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'jenis_tagihan_id', 'pedagang_id', 'nominal',
+        'tempat_kategori_id', 'pedagang_id', 'nominal',
     ];
 
     public function jenisTagihan()
@@ -21,5 +21,10 @@ class Tagihan extends Model
     public function pedagang()
     {
         return $this->belongsTo(Pedagang::class);
+    }
+
+    public function tempatKategori()
+    {
+        return $this->belongsTo(TempatKategori::class, 'tempat_kategori_id');
     }
 }

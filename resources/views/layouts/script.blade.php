@@ -28,6 +28,15 @@
 <script src="{{ asset('assets/libs/moment/min/moment.min.js') }}"></script>
 <script src="{{ asset('assets/libs/fullcalendar/dist/fullcalendar.min.js') }}"></script>
 <script src="{{ asset('dist/js/pages/calendar/cal-init.js') }}"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $('.datatable').DataTable();
+    $( ".datepicker" ).datepicker({
+        format: 'yyyy-mm-dd'
+    });
+</script>
 <script>
     $('#calendar').fullCalendar('option', 'height', 650);
     $('.select2').select2({
