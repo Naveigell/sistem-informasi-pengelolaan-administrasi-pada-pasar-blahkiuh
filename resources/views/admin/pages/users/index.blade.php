@@ -5,47 +5,37 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Pedagang') }}</div>
+                <div class="card-header">{{ __('Users') }}</div>
 
                 <div class="card-body">
-                    @if(auth()->user()->level == 'Admin/Bendahara')
                     <div class="mb-4">
-                        <a href="{{ route('pedagang.create') }}" class="btn btn-primary">Tambah Pedagang</a>
+                        <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Tambah User</a>
                     </div>
-                    @endif
                     <table class="table datatable">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Nama</th>
                                 <th>Email</th>
-                                <th>Tempat</th>
-                                <th>No. Telp</th>
-                                <th>Tgl. Bergabung</th>
-                                @if(auth()->user()->level == 'Admin/Bendahara')
-                                    <th>Aksi</th>
-                                @endif
+                                <th>Level</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($pedagang as $row)
+                            @foreach ($users as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->nama }}</td>
                                     <td>{{ $row->email }}</td>
-                                    <td>{{ $row->tempat->nama_tempat }}{{ $row->position ? ' - ' . $row->position : '' }}</td>
-                                    <td>{{ $row->no_telp }}</td>
-                                    <td>{{ $row->tgl_bergabung }}</td>
-                                    @if(auth()->user()->level == 'Admin/Bendahara')
+                                    <td>{{ $row->level }}</td>
                                     <td>
-                                        <form action="{{ route('pedagang.destroy', $row->id) }}" method="post">
+                                        <form action="{{ route('admin.users.destroy', $row->id) }}" method="post">
                                             @csrf
                                             @method('delete')
-                                            <a href="{{ route('pedagang.edit', $row->id) }}" class="btn btn-sm btn-warning text-white" title="Edit"><i class="fa fa-cog"></i></a>
+                                            <a href="{{ route('admin.users.edit', $row->id) }}" class="btn btn-sm btn-warning text-white" title="Edit"><i class="fa fa-cog"></i></a>
                                             <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin untuk menghapus data?')"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
-                                    @endif
                                 </tr>
 
                             @endforeach

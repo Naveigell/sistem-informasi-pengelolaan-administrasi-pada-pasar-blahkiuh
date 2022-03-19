@@ -10,7 +10,7 @@
                 <div class="card-body">
                     @if(auth()->user()->level == 'Admin/Bendahara')
                         <div class="mb-4">
-                            <a href="{{ route('kwitansi.create') }}" class="btn btn-primary">Tambah Kwitansi</a>
+                            <a href="{{ route('admin.kwitansi.create') }}" class="btn btn-primary">Tambah Kwitansi</a>
                         </div>
                     @endif
                     <table class="table datatable">
@@ -35,12 +35,12 @@
                                     <td>Rp. {{ number_format($row->nominal) }}</td>
                                     <td>{{ $row->keterangan }}</td>
                                     <td>
-                                        <form action="{{ route('kwitansi.destroy', $row->id) }}" method="post">
+                                        <form action="{{ route('admin.kwitansi.destroy', $row->id) }}" method="post">
                                             @csrf
                                             @method('delete')
-                                            <a href="{{ route('kwitansi.show', $row->id) }}" class="btn btn-sm btn-info text-white" title="cetak" target="_blank"><i class="fa fa-print"></i></a>
+                                            <a href="{{ route('admin.kwitansi.show', $row->id) }}" class="btn btn-sm btn-info text-white" title="cetak" target="_blank"><i class="fa fa-print"></i></a>
                                             @if(auth()->user()->level == 'Admin/Bendahara')
-                                                <a href="{{ route('kwitansi.edit', $row->id) }}" class="btn btn-sm btn-warning text-white" title="Edit"><i class="fa fa-cog"></i></a>
+                                                <a href="{{ route('admin.kwitansi.edit', $row->id) }}" class="btn btn-sm btn-warning text-white" title="Edit"><i class="fa fa-cog"></i></a>
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin untuk menghapus data?')"><i class="fa fa-trash"></i></button>
                                             @endif
                                         </form>

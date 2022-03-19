@@ -2,13 +2,7 @@
 
 use App\Http\Controllers\Auth\PedagangLoginController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\KwitansiController;
-use App\Http\Controllers\PedagangController;
 use App\Http\Controllers\PemasukanController;
-use App\Http\Controllers\PembayaranController;
-use App\Http\Controllers\PengeluaranController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,9 +27,9 @@ Route::post('/pedagang/login', [PedagangLoginController::class, 'login'])->name(
 Route::middleware(['auth:pedagang'])->group(function() {
     Route::get('/pedagang/dashboard', [HomeController::class, 'index']);
     Route::get('/pedagang/logout', [PedagangLoginController::class, 'logout'])->name('pedagang.logout');
-    Route::get('/pedagang/pembayaran', [PembayaranController::class, 'index'])->name('pedagang.pembayaran.index');
-    Route::get('/pedagang/pembayaran/create', [PembayaranController::class, 'create'])->name('pedagang.pembayaran.create');
-    Route::post('/pedagang/pembayaran/store', [PembayaranController::class, 'store'])->name('pedagang.pembayaran.store');
+    Route::get('/pedagang/pembayaran', [\App\Http\Controllers\PembayaranController::class, 'index'])->name('pedagang.pembayaran.index');
+    Route::get('/pedagang/pembayaran/create', [\App\Http\Controllers\PembayaranController::class, 'create'])->name('pedagang.pembayaran.create');
+    Route::post('/pedagang/pembayaran/store', [\App\Http\Controllers\PembayaranController::class, 'store'])->name('pedagang.pembayaran.store');
     Route::get('/pedagang/pengeluaran', [PemasukanController::class, 'index'])->name('pedagang.pengeluaran');
     Route::resource('tagihans', \App\Http\Controllers\Pedagang\TagihanController::class);
 });
@@ -54,16 +48,16 @@ Route::middleware(['auth'])->group(function() {
         Route::resource('kategori', \App\Http\Controllers\Admin\KategoriController::class);
         Route::resource('tempats', \App\Http\Controllers\Admin\TempatController::class);
         Route::resource('tagihans', \App\Http\Controllers\Admin\TagihanController::class);
-        Route::resource('pedagang', PedagangController::class);
-        Route::resource('users', UserController::class);
-        Route::resource('kwitansi', KwitansiController::class);
-        Route::resource('pengeluaran', PengeluaranController::class);
-        Route::resource('pembayaran', PembayaranController::class);
+        Route::resource('pedagang', \App\Http\Controllers\Admin\PedagangController::class);
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+        Route::resource('kwitansi', \App\Http\Controllers\Admin\KwitansiController::class);
+        Route::resource('pengeluaran', \App\Http\Controllers\Admin\PengeluaranController::class);
+        Route::resource('pembayaran', \App\Http\Controllers\Admin\PembayaranController::class);
 
         Route::get('laporan/pemasukan', [PemasukanController::class, 'laporan'])->name('pemasukan.laporan');
         Route::get('cetak/pemasukan', [PemasukanController::class, 'cetak'])->name('pemasukan.cetak');
-        Route::get('laporan/pengeluaran', [PengeluaranController::class, 'laporan'])->name('pengeluaran.laporan');
-        Route::get('cetak/pengeluaran', [PengeluaranController::class, 'cetak'])->name('pengeluaran.cetak');
+        Route::get('laporan/pengeluaran', [\App\Http\Controllers\Admin\PengeluaranController::class, 'laporan'])->name('pengeluaran.laporan');
+        Route::get('cetak/pengeluaran', [\App\Http\Controllers\Admin\PengeluaranController::class, 'cetak'])->name('pengeluaran.cetak');
     });
 });
 

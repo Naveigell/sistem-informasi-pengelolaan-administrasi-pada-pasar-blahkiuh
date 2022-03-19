@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Form Pedagang') }}</div>
 
                 <div class="card-body">
-                    <form action="{{ (!isset($pedagang->id)) ? route('pedagang.store') : route('pedagang.update', $pedagang->id) }}" method="post">
+                    <form action="{{ (!isset($pedagang->id)) ? route('admin.pedagang.store') : route('admin.pedagang.update', $pedagang->id) }}" method="post">
                         @csrf
                         @isset($pedagang->id)
                             {{ method_field('PUT')}}
@@ -62,10 +62,10 @@
                                 <select name="tempat_id" class="form-control @error('tempat_id') is-invalid @enderror select2" id="">
                                     <option value="">-- Nothing Selected --</option>
                                     @foreach($tempats as $tempat)
-                                        <option value="{{ $tempat->id }}">{{ $tempat->nama_tempat }}</option>
+                                        <option value="{{ $tempat->id }}" @if (old('tempat_id', @$pedagang ? $pedagang->tempat_id : '') === $tempat->id) selected @endif>{{ $tempat->nama_tempat }}</option>
                                     @endforeach
                                 </select>
-                                @error('lokasi')
+                                @error('tempat_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

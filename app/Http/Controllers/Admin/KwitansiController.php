@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Kwitansi;
 use App\Models\Pedagang;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class KwitansiController extends Controller
     public function index()
     {
         $data['kwitansi'] = Kwitansi::orderBy('no_kwitansi', 'asc')->get();
-        return view('kwitansi.index', $data);
+        return view('admin.pages.kwitansi.index', $data);
     }
 
     /**
@@ -29,7 +30,7 @@ class KwitansiController extends Controller
     {
         $data['kwitansi'] = Kwitansi::getDefaultValues();
         $data['pedagang'] = Pedagang::orderBy('nama', 'asc')->get();
-        return view('kwitansi.form', $data);
+        return view('admin.pages.kwitansi.form', $data);
     }
 
     /**
@@ -50,7 +51,7 @@ class KwitansiController extends Controller
         $input = $request->toArray();
         $input['terbilang'] = $this->terbilang($input['nominal']);
         Kwitansi::create($input);
-        return redirect()->route('kwitansi.index')->with('success', 'Berhasil menambah data kwitansi');
+        return redirect()->route('admin.kwitansi.index')->with('success', 'Berhasil menambah data kwitansi');
     }
 
     /**
@@ -64,7 +65,7 @@ class KwitansiController extends Controller
         $data['kwitansi'] = Kwitansi::find($id);
         $pdf = App::make('dompdf.wrapper');
         $pdf->setPaper('a5', 'landscape');
-        $pdf->loadView('kwitansi.show', $data);
+        $pdf->loadView('admin.pages.kwitansi.show', $data);
         return $pdf->stream();
         //return view('kwitansi.show');
     }
@@ -79,7 +80,7 @@ class KwitansiController extends Controller
     {
         $data['kwitansi'] = Kwitansi::findOrFail($id);
         $data['pedagang'] = Pedagang::orderBy('nama', 'asc')->get();
-        return view('kwitansi.form', $data);
+        return view('admin.pages.kwitansi.form', $data);
     }
 
     /**
@@ -101,7 +102,7 @@ class KwitansiController extends Controller
         $input = $request->toArray();
         $input['terbilang'] = $this->terbilang($input['nominal']);
         Kwitansi::findOrfail($id)->update($input);
-        return redirect()->route('kwitansi.index')->with('success', 'Berhasil mengubah data kwitansi');
+        return redirect()->route('admin.kwitansi.index')->with('success', 'Berhasil mengubah data kwitansi');
     }
 
     /**
@@ -113,7 +114,7 @@ class KwitansiController extends Controller
     public function destroy($id)
     {
         Kwitansi::findOrfail($id)->delete();
-        return redirect()->route('kwitansi.index')->with('success', 'Berhasil menghapus data kwitansi');
+        return redirect()->route('admin.kwitansi.index')->with('success', 'Berhasil menghapus data kwitansi');
     }
 
     private function penyebut($nilai) {
