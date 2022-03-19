@@ -113,13 +113,13 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pedagang.pengeluaran') ? 'active' : '' }}" href="{{ route('pedagang.pengeluaran') }}" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pedagang.pengeluaran.index') ? 'active' : '' }}" href="{{ route('pedagang.pengeluaran.index') }}" aria-expanded="false">
                             <i class="mdi mdi-upload"></i>
                             <span class="hide-menu">Pengeluaran</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('tagihans.index') ? 'active' : '' }}" href="{{ route('tagihans.index') }}" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pedagang.tagihans.index') ? 'active' : '' }}" href="{{ route('pedagang.tagihans.index') }}" aria-expanded="false">
                             <i class="fa fa-money-bill-alt"></i>
                             <span class="hide-menu">Tagihan</span>
                         </a>

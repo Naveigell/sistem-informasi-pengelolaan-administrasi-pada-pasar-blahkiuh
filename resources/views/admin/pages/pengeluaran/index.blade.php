@@ -10,7 +10,7 @@
                 <div class="card-body">
                     @if(auth()->user()->level == 'Admin/Bendahara')
                         <div class="mb-4">
-                            <a href="{{ route('pengeluaran.create') }}" class="btn btn-primary">Tambah Pengeluaran</a>
+                            <a href="{{ route('admin.pengeluaran.create') }}" class="btn btn-primary">Tambah Pengeluaran</a>
                         </div>
                     @endif
                     <table class="table datatable">
@@ -40,10 +40,10 @@
                                     <td>{{ $row->user->nama }}</td>
                                     @if(auth()->user()->level == 'Admin/Bendahara')
                                         <td>
-                                            <form action="{{ route('pengeluaran.destroy', $row->id) }}" method="post">
+                                            <form action="{{ route('admin.pengeluaran.destroy', $row->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                <a href="{{ route('pengeluaran.edit', $row->id) }}" class="btn btn-sm btn-warning text-white" title="Edit"><i class="fa fa-cog"></i></a>
+                                                <a href="{{ route('admin.pengeluaran.edit', $row->id) }}" class="btn btn-sm btn-warning text-white" title="Edit"><i class="fa fa-cog"></i></a>
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin untuk menghapus data?')"><i class="fa fa-trash"></i></button>
                                             </form>
                                         </td>

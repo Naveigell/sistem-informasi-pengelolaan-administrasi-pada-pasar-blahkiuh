@@ -8,6 +8,7 @@ use App\Models\Kategori;
 use App\Models\Pedagang;
 use App\Models\Pemasukan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class PemasukanController extends Controller
 {
@@ -134,5 +135,29 @@ class PemasukanController extends Controller
         $pemasukan->delete();
 
         return redirect(route('admin.kategori.pemasukan.index', $kategori));
+    }
+
+    public function laporan()
+    {
+        $data['pemasukan'] = [];
+        if(request('jenis_cukai') == 'harian') {
+            $data['pemasukan'] = Pemasukan::where('tgl', request('tgl'))->get();
+        } else {
+            $data['pemasukan'] = Pemasukan::whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'))->get();
+        }
+        return view('pemasukan.laporan', $data);
+    }
+
+    public function cetak()
+    {
+        $data['pemasukan'] = [];
+        if(request('jenis_cukai') == 'harian') {
+            $data['pemasukan'] = Pemasukan::where('tgl', request('tgl'))->get();
+        } else {
+            $data['pemasukan'] = Pemasukan::whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'))->get();
+        }
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pemasukan.cetak', $data);
+        return $pdf->stream();
     }
 }

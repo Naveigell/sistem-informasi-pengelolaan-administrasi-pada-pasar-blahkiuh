@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Form Pengeluaran') }}</div>
 
                 <div class="card-body">
-                    <form action="{{ (!isset($pengeluaran->id)) ? route('pengeluaran.store') : route('pengeluaran.update', $pengeluaran->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ (!isset($pengeluaran->id)) ? route('admin.pengeluaran.store') : route('admin.pengeluaran.update', $pengeluaran->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @isset($pengeluaran->id)
                             {{ method_field('PUT')}}
