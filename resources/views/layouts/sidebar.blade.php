@@ -16,33 +16,33 @@
                 </li>
                 @if(auth()->guard('web')->check())
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ url('dashboard') }}" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}" aria-expanded="false">
                             <i class="mdi mdi-av-timer"></i>
                             <span class="hide-menu">Dashboard</span>
                         </a>
                     </li>
                     <div class="devider"></div>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pedagang.index') ? 'active' : '' }}" href="{{ route('pedagang.index') }}" aria-expanded="false">
-                            <i class="mdi mdi-wallet"></i>
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.pedagang.index') ? 'active' : '' }}" href="{{ route('admin.pedagang.index') }}" aria-expanded="false">
+                            <i class="fa fa-handshake"></i>
                             <span class="hide-menu">Pedagang</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('users.index') ? 'active' : '' }}" href="{{ route('users.index') }}" aria-expanded="false">
-                            <i class="mdi mdi-wallet-travel"></i>
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.users.index') ? 'active' : '' }}" href="{{ route('admin.users.index') }}" aria-expanded="false">
+                            <i class="fa fa-users"></i>
                             <span class="hide-menu">Users</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('kategori.index') ? 'active' : '' }}" href="{{ route('kategori.index') }}" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.kategori.index') ? 'active' : '' }}" href="{{ route('admin.kategori.index') }}" aria-expanded="false">
                             <i class="mdi mdi-paper-cut-vertical"></i>
                             <span class="hide-menu">Kategori</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                            <i class="mdi mdi-cart-outline"></i>
+                            <i class="mdi mdi-download"></i>
                             <span class="hide-menu">Pemasukan</span>
                         </a>
                         <ul aria-expanded="false" class="collapse first-level">
@@ -57,38 +57,38 @@
                         </ul>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pengeluaran.index') ? 'active' : '' }}" href="{{ route('pengeluaran.index') }}" aria-expanded="false">
-                            <i class="mdi mdi-paper-cut-vertical"></i>
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.pengeluaran.index') ? 'active' : '' }}" href="{{ route('admin.pengeluaran.index') }}" aria-expanded="false">
+                            <i class="mdi mdi-upload"></i>
                             <span class="hide-menu">Pengeluaran</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('kwitansi.index') ? 'active' : '' }}" href="{{ route('kwitansi.index') }}" aria-expanded="false">
-                            <i class="mdi mdi-paper-cut-vertical"></i>
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.kwitansi.index') ? 'active' : '' }}" href="{{ route('admin.kwitansi.index') }}" aria-expanded="false">
+                            <i class="fa fa-paperclip"></i>
                             <span class="hide-menu">Kwitansi</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.tagihans.index') ? 'active' : '' }}" href="{{ route('admin.tagihans.index') }}" aria-expanded="false">
-                            <i class="mdi mdi-wallet-giftcard"></i>
+                            <i class="fa fa-money-bill-alt"></i>
                             <span class="hide-menu">Tagihan</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pembayaran.index') ? 'active' : '' }}" href="{{ route('pembayaran.index') }}" aria-expanded="false">
-                            <i class="mdi mdi-paper-cut-vertical"></i>
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.pembayaran.index') ? 'active' : '' }}" href="{{ route('admin.pembayaran.index') }}" aria-expanded="false">
+                            <i class="fa fa-hand-holding"></i>
                             <span class="hide-menu">Pembayaran</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pemasukan.laporan') ? 'active' : '' }}" href="{{ route('pemasukan.laporan') }}" aria-expanded="false">
-                            <i class="mdi mdi-paper-cut-vertical"></i>
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.pemasukan.laporan') ? 'active' : '' }}" href="{{ route('admin.pemasukan.laporan') }}" aria-expanded="false">
+                            <i class="mdi mdi-book-plus"></i>
                             <span class="hide-menu">Laporan Pemasukan</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pengeluaran.laporan') ? 'active' : '' }}" href="{{ route('pengeluaran.laporan') }}" aria-expanded="false">
-                            <i class="mdi mdi-paper-cut-vertical"></i>
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.pengeluaran.laporan') ? 'active' : '' }}" href="{{ route('admin.pengeluaran.laporan') }}" aria-expanded="false">
+                            <i class="mdi mdi-book-minus"></i>
                             <span class="hide-menu">Laporan Pengeluaran</span>
                         </a>
                     </li>
@@ -108,19 +108,19 @@
                     <div class="devider"></div>
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pedagang.pembayaran.index') ? 'active' : '' }}" href="{{ route('pedagang.pembayaran.index') }}" aria-expanded="false">
-                            <i class="mdi mdi-wallet"></i>
+                            <i class="fa fa-hand-holding"></i>
                             <span class="hide-menu">Pembayaran</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pedagang.pengeluaran') ? 'active' : '' }}" href="{{ route('pedagang.pengeluaran') }}" aria-expanded="false">
-                            <i class="mdi mdi-wallet-travel"></i>
+                            <i class="mdi mdi-upload"></i>
                             <span class="hide-menu">Pengeluaran</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('tagihans.index') ? 'active' : '' }}" href="{{ route('tagihans.index') }}" aria-expanded="false">
-                            <i class="mdi mdi-wallet-giftcard"></i>
+                            <i class="fa fa-money-bill-alt"></i>
                             <span class="hide-menu">Tagihan</span>
                         </a>
                     </li>
