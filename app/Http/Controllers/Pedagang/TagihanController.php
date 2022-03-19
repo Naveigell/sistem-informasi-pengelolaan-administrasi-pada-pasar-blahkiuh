@@ -15,7 +15,7 @@ class TagihanController extends Controller
      */
     public function index()
     {
-        $tagihans = Tagihan::with('jenisTagihan')->where('pedagang_id', auth()->id())->get();
+        $tagihans = Tagihan::with('pedagang', 'tempatKategori')->where('pedagang_id', auth()->id())->get();
 
         return view('pedagangs.pages.tagihan.index', compact('tagihans'));
     }

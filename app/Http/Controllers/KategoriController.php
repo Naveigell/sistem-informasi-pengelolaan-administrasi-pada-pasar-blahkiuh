@@ -47,12 +47,14 @@ class KategoriController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Kategori  $kategori
-     * @return \Illuminate\Http\Response
+     * @param Kategori $kategori
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show(Kategori $kategori)
     {
-        //
+        $kategori->load('pemasukan');
+
+        return view('admin.pages.pemasukan.index', compact('kategori'));
     }
 
     /**

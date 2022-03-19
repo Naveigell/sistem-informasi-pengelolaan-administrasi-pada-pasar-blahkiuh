@@ -49,12 +49,25 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function() {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('kategori', \App\Http\Controllers\Admin\KategoriController::class);
+        Route::prefix('kategori/{kategori}')->name('kategori.')->group(function () {
+            Route::resource('pemasukan', \App\Http\Controllers\Admin\PemasukanController::class);
+        });
+    });
+
+
+
+
+    /// WILL NOT USED LATER
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-    Route::resource('kategori', KategoriController::class);
+    Route::prefix('kategori/{kategori}')->name('kategori.')->group(function () {
+        Route::resource('pemasukan', \App\Http\Controllers\Admin\PemasukanController::class);
+    });
+    Route::resource('kategori', \App\Http\Controllers\Admin\KategoriController::class);
     Route::resource('pedagang', PedagangController::class);
     Route::resource('users', UserController::class);
     Route::resource('kwitansi', KwitansiController::class);
-    Route::resource('pemasukan', PemasukanController::class);
     Route::resource('pengeluaran', PengeluaranController::class);
     Route::resource('pembayaran', PembayaranController::class);
     Route::get('laporan/pemasukan', [PemasukanController::class, 'laporan'])->name('pemasukan.laporan');

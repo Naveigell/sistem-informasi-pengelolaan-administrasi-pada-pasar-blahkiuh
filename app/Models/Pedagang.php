@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\Hash;
 
 class Pedagang extends Authenticatable
 {
@@ -45,5 +46,10 @@ class Pedagang extends Authenticatable
 
         $this->attributes['tempat_id'] = $value;
         $this->attributes['position']  = $max ? $max + 1 : 1;
+    }
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
     }
 }

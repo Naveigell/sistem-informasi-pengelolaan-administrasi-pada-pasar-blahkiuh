@@ -22,7 +22,7 @@
                             @foreach($tagihans as $tagihan)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $tagihan->jenisTagihan->nama }}</td>
+                                    <td>{{ $tagihan->tempatKategori->nama_kategori }}</td>
                                     <td>{{ $tagihan->pedagang->nama }}</td>
                                     <td>Rp. {{ number_format($tagihan->nominal, 0, ',', '.') }}</td>
                                     <td>

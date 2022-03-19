@@ -28,7 +28,7 @@
                             @foreach ($kategori as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $row->nama_kategori }}</td>
+                                    <td>{{ ucwords($row->nama_kategori) }}</td>
                                     <td>{{ $row->keterangan }}</td>
                                     @if(auth()->user()->level == 'Admin/Bendahara')
                                     <td>

@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property integer is_pedagang
+ */
 class Kategori extends Model
 {
     use HasFactory;
@@ -13,7 +16,7 @@ class Kategori extends Model
 
     protected $fillable = [
         'nama_kategori',
-        'keterangan'
+        'is_pedagang'
     ];
 
     public static function getDefaultValues()
@@ -22,5 +25,15 @@ class Kategori extends Model
             'nama_kategori' => '',
             'keterangan' => '',
         ];
+    }
+
+    public function pemasukan()
+    {
+        return $this->hasMany(Pemasukan::class);
+    }
+
+    public function setIsPedagangAttribute($value)
+    {
+        $this->attributes['is_pedagang'] = $value ? 1 : 0;
     }
 }
