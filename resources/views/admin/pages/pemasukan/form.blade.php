@@ -13,7 +13,7 @@
                     <div class="card-header">{{ __('Form Pemasukan') }} dari {{ ucwords($kategori->nama_kategori) }}</div>
 
                     <div class="card-body">
-                        <form action="{{ @!$pemasukan ? route('kategori.pemasukan.store', $kategori) : route('kategori.pemasukan.update', [$kategori, $pemasukan]) }}" method="post">
+                        <form action="{{ @!$pemasukan ? route('admin.kategori.pemasukan.store', $kategori) : route('admin.kategori.pemasukan.update', [$kategori, $pemasukan]) }}" method="post">
                             @csrf
                             @isset($pemasukan->id)
                                 {{ method_field('PUT')}}

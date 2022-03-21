@@ -140,24 +140,35 @@ class PemasukanController extends Controller
     public function laporan()
     {
         $data['pemasukan'] = [];
+
         if(request('jenis_cukai') == 'harian') {
             $data['pemasukan'] = Pemasukan::where('tgl', request('tgl'))->get();
-        } else {
+        } else if (request('jenis_cukai') == 'bulanan') {
             $data['pemasukan'] = Pemasukan::whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'))->get();
+        } else {
+            $data['pemasukan'] = Pemasukan::whereYear('tgl', request('tahun'))->get();
         }
-        return view('pemasukan.laporan', $data);
+
+        return view('admin.pages.pemasukan.laporan', $data);
     }
 
     public function cetak()
     {
-        $data['pemasukan'] = [];
+        $kategoris  = Kategori::query()->pluck('nama_kategori', 'id');
+
         if(request('jenis_cukai') == 'harian') {
-            $data['pemasukan'] = Pemasukan::where('tgl', request('tgl'))->get();
+            $pemasukans = Pemasukan::with('kategori')->where('tgl', request('tgl'))->get();
+        } else if (request('jenis_cukai') == 'bulanan') {
+            $pemasukans = Pemasukan::with('kategori')->whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'))->get();
         } else {
-            $data['pemasukan'] = Pemasukan::whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'))->get();
+            $pemasukans = Pemasukan::with('kategori')->whereYear('tgl', request('tahun'))->get();
         }
+
+        $pemasukans = $pemasukans->groupBy('kategori.id');
+
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('pemasukan.cetak', $data);
+        $pdf->loadView('admin.pages.pemasukan.print', compact('pemasukans', 'kategoris'));
+
         return $pdf->stream();
     }
 }

@@ -30,9 +30,9 @@ Route::middleware(['auth:pedagang'])->prefix('pedagang')
 
     Route::get('/dashboard', [HomeController::class, 'index']);
     Route::get('/logout', [PedagangLoginController::class, 'logout'])->name('logout');
-    Route::get('/pembayaran', [\App\Http\Controllers\PembayaranController::class, 'index'])->name('pembayaran.index');
-    Route::get('/pembayaran/create', [\App\Http\Controllers\PembayaranController::class, 'create'])->name('pembayaran.create');
-    Route::post('/pembayaran/store', [\App\Http\Controllers\PembayaranController::class, 'store'])->name('pembayaran.store');
+    Route::get('/pembayaran', [\App\Http\Controllers\Pedagang\PembayaranController::class, 'index'])->name('pembayaran.index');
+    Route::get('/pembayaran/create', [\App\Http\Controllers\Pedagang\PembayaranController::class, 'create'])->name('pembayaran.create');
+    Route::post('/pembayaran/store', [\App\Http\Controllers\Pedagang\PembayaranController::class, 'store'])->name('pembayaran.store');
     Route::get('/pengeluaran', [\App\Http\Controllers\Pedagang\PengeluaranController::class, 'index'])->name('pengeluaran.index');
     Route::resource('tagihans', \App\Http\Controllers\Pedagang\TagihanController::class);
 });
@@ -57,8 +57,8 @@ Route::middleware(['auth'])->group(function() {
         Route::resource('pengeluaran', \App\Http\Controllers\Admin\PengeluaranController::class);
         Route::resource('pembayaran', \App\Http\Controllers\Admin\PembayaranController::class);
 
-        Route::get('laporan/pemasukan', [\App\Http\Controllers\Admin\PengeluaranController::class, 'laporan'])->name('pemasukan.laporan');
-        Route::get('cetak/pemasukan', [\App\Http\Controllers\Admin\PengeluaranController::class, 'cetak'])->name('pemasukan.cetak');
+        Route::get('laporan/pemasukan', [\App\Http\Controllers\Admin\PemasukanController::class, 'laporan'])->name('pemasukan.laporan');
+        Route::get('cetak/pemasukan', [\App\Http\Controllers\Admin\PemasukanController::class, 'cetak'])->name('pemasukan.cetak');
         Route::get('laporan/pengeluaran', [\App\Http\Controllers\Admin\PengeluaranController::class, 'laporan'])->name('pengeluaran.laporan');
         Route::get('cetak/pengeluaran', [\App\Http\Controllers\Admin\PengeluaranController::class, 'cetak'])->name('pengeluaran.cetak');
     });

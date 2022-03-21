@@ -122,20 +122,33 @@ class PengeluaranController extends Controller
     public function laporan()
     {
         $data['pengeluaran'] = [];
-        if (request('bulan')) {
+
+        if (request('jenis_laporan') === 'harian') {
+            $data['pengeluaran'] = Pengeluaran::where('tgl', request('tgl'))->get();
+        } elseif (\request('jenis_laporan') === 'bulanan') {
             $data['pengeluaran'] = Pengeluaran::whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'))->get();
+        } else {
+            $data['pengeluaran'] = Pengeluaran::whereYear('tgl', request('tahun'))->get();
         }
+
         return view('admin.pages.pengeluaran.laporan', $data);
     }
 
     public function cetak()
     {
         $data['pengeluaran'] = [];
-        if (request('bulan')) {
+
+        if (request('jenis_laporan') === 'harian') {
+            $data['pengeluaran'] = Pengeluaran::where('tgl', request('tgl'))->get();
+        } elseif (\request('jenis_laporan') === 'bulanan') {
             $data['pengeluaran'] = Pengeluaran::whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'))->get();
+        } else {
+            $data['pengeluaran'] = Pengeluaran::whereYear('tgl', request('tahun'))->get();
         }
+
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('admin.pages.pengeluaran.cetak', $data);
+
         return $pdf->stream();
     }
 }

@@ -73,7 +73,7 @@ class PembayaranController extends Controller
             $input = $request->toArray();
             $input['pedagang_id'] = auth()->user()->id;
             $input['status'] = 0;
-            $redirect = 'pedagang.pembayaran.index';
+            $redirect = 'admin.pembayaran.index';
         }
 
         $path = $request->file('bukti_pembayaran')->store('public/bukti_pembayaran');

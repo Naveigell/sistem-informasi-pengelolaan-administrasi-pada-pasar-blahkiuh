@@ -8,11 +8,7 @@
                 <div class="card-header">{{ __('Form Pembayaran') }}</div>
 
                 <div class="card-body">
-                    @if (auth()->guard('web')->check())
                     <form action="{{ (!isset($pembayaran->id)) ? route('admin.pembayaran.store') : route('admin.pembayaran.update', $pembayaran->id) }}" method="post" enctype="multipart/form-data">
-                    @else
-                    <form action="{{ route('pedagang.pembayaran.store') }}" method="post" enctype="multipart/form-data">
-                    @endif
                         @csrf
                         @isset($pembayaran->id)
                             {{ method_field('PUT')}}

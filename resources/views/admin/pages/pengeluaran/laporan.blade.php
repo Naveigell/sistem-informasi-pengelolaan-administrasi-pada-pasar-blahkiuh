@@ -12,11 +12,24 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <form action="" method="get">
-                                    <div class="row" id="field-bulanan">
+                                    <div class="form-group">
+                                        <label>Jenis Laporan</label>
+                                        <select name="jenis_laporan" class="form-select select2" id="jenis_cukai">
+                                            <option value="">Pilih</option>
+                                            <option value="harian" {{ request('jenis_laporan') == 'harian' ? 'selected' : '' }}>Harian</option>
+                                            <option value="bulanan" {{ request('jenis_laporan') == 'bulanan' ? 'selected' : ''  }}>Bulanan</option>
+                                            <option value="tahunan" {{ request('jenis_laporan') == 'tahunan' ? 'selected' : ''  }}>Tahunan</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-3 {{ request('jenis_laporan') == 'harian' ? '' : 'd-none' }}" id="field-harian">
+                                        <label>Tanggal</label>
+                                        <input type="text" name="tgl" class="form-control datepicker" id="tgl-tgl" value="{{ request('tgl') }}">
+                                    </div>
+                                    <div class="row  {{ request('jenis_laporan') == 'bulanan' ? '' : 'd-none' }}" id="field-bulanan">
                                         <div class="col-6">
                                             <div class="form-group mt-3">
                                                 <label>Bulan</label>
-                                                <select name="bulan" class="form-select" id="bulan">
+                                                <select name="bulan" class="form-select select2" id="bulan-bulan">
                                                     @foreach (bulan() as $key => $option)
                                                         <option value="{{ $key }}" {{ $key == request('bulan') ? 'selected' : '' }}>{{ $option }}</option>
                                                     @endforeach
@@ -26,9 +39,13 @@
                                         <div class="col-6">
                                             <div class="form-group mt-3">
                                                 <label>Tahun</label>
-                                                <input type="text" name="tahun" class="form-control" id="tahun" value="{{ request('tgl') ?? date('Y') }}">
+                                                <input type="number" name="tahun" class="form-control" id="tahun-bulan" value="{{ request('tahun') ?? date('Y') }}">
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="form-group mt-3 {{ request('jenis_laporan') == 'tahunan' ? '' : 'd-none' }}" id="field-tahunan">
+                                        <label>Tahun</label>
+                                        <input type="number" name="tahun" class="form-control" id="tahun-tahun" value="{{ request('tahun', date('Y')) }}">
                                     </div>
                                     <div class="form-group mt-3">
                                         <input type="submit" value="Cari" class="btn btn-primary">
@@ -43,7 +60,7 @@
         </div>
     </div>
 
-    @if (request()->get('bulan'))
+    @if (request()->filled('jenis_laporan'))
     <div class="row mt-4">
         <div class="col-12">
             <div class="card">
@@ -52,9 +69,11 @@
                         <div>
                             Laporan Pengeluaran
                         </div>
-                        <div>
-                            <a href="{{ route('pengeluaran.cetak') .'?'. getParams(url()->full()) }}" target="_blank">Cetak</a>
-                        </div>
+                        @if($pengeluaran->count() > 0)
+                            <div>
+                                <a href="{{ route('admin.pengeluaran.cetak') .'?'. getParams(url()->full()) }}" target="_blank">Cetak</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -96,3 +115,47 @@
     @endif
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $('#jenis_cukai').change(function(){
+            $('#field-harian').addClass('d-none');
+            $('#field-bulanan').addClass('d-none');
+            $('#field-tahunan').addClass('d-none');
+
+            if ($(this).val() === 'harian') {
+                $('#field-harian').removeClass('d-none');
+                $('#field-bulanan').addClass('d-none');
+                $('#field-tahunan').addClass('d-none');
+
+                $('#tgl').attr('name', 'tgl');
+                $('#bulan-bulan').removeAttr('name');
+                $('#tahun-bulan').removeAttr('name');
+                $('#tahun-tahun').removeAttr('name');
+            }
+
+            if ($(this).val() === 'bulanan') {
+                $('#field-tahunan').addClass('d-none');
+                $('#field-bulanan').removeClass('d-none');
+                $('#field-harian').addClass('d-none');
+
+                $('#bulan-bulan').attr('name', 'bulan');
+                $('#tahun-bulan').attr('name', 'tahun');
+                $('#tahun-tahun').removeAttr('name');
+                $('#tgl-tgl').removeAttr('name');
+            }
+
+            if ($(this).val() === 'tahunan') {
+                $('#field-tahunan').removeClass('d-none');
+                $('#field-bulanan').addClass('d-none');
+                $('#field-harian').addClass('d-none');
+
+                $('#tgl-tgl').removeAttr('name');
+                $('#bulan-bulan').removeAttr('name');
+                $('#tahun-bulan').removeAttr('name');
+                $('#tahun-tahun').attr('name', 'tahun');
+            }
+
+        });
+    </script>
+@endpush

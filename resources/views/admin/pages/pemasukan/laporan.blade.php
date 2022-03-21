@@ -14,21 +14,22 @@
                                 <form action="" method="get">
                                     <div class="form-group">
                                         <label>Jenis Cukai</label>
-                                        <select name="jenis_cukai" class="form-select" id="jenis_cukai">
+                                        <select name="jenis_cukai" class="form-select select2" id="jenis_cukai">
                                             <option value="">Pilih</option>
                                             <option value="harian" {{ request('jenis_cukai') == 'harian' ? 'selected' : '' }}>Harian</option>
                                             <option value="bulanan" {{ request('jenis_cukai') == 'bulanan' ? 'selected' : ''  }}>Bulanan</option>
+                                            <option value="tahunan" {{ request('jenis_cukai') == 'tahunan' ? 'selected' : ''  }}>Tahunan</option>
                                         </select>
                                     </div>
                                     <div class="form-group mt-3 {{ request('jenis_cukai') == 'harian' ? '' : 'd-none' }}" id="field-harian">
                                         <label>Tanggal</label>
-                                        <input type="text" name="tgl" class="form-control datepicker" id="tgl" value="{{ request('tgl') }}">
+                                        <input type="text" name="tgl" class="form-control datepicker" id="tgl-tgl" value="{{ request('tgl') }}">
                                     </div>
                                     <div class="row  {{ request('jenis_cukai') == 'bulanan' ? '' : 'd-none' }}" id="field-bulanan">
                                         <div class="col-6">
                                             <div class="form-group mt-3">
                                                 <label>Bulan</label>
-                                                <select name="bulan" class="form-select" id="bulan">
+                                                <select name="bulan" class="form-select select2" id="bulan-bulan">
                                                     @foreach (bulan() as $key => $option)
                                                         <option value="{{ $key }}" {{ $key == request('bulan') ? 'selected' : '' }}>{{ $option }}</option>
                                                     @endforeach
@@ -38,9 +39,13 @@
                                         <div class="col-6">
                                             <div class="form-group mt-3">
                                                 <label>Tahun</label>
-                                                <input type="text" name="tahun" class="form-control" id="tahun" value="{{ request('tgl') ?? date('Y') }}">
+                                                <input type="text" name="tahun" class="form-control" id="tahun-bulan" value="{{ request('tgl') ?? date('Y') }}">
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="form-group mt-3 {{ request('jenis_cukai') == 'tahunan' ? '' : 'd-none' }}" id="field-tahunan">
+                                        <label>Tahun</label>
+                                        <input type="number" name="tahun" class="form-control" id="tahun-tahun" value="{{ request('tahun', date('Y')) }}">
                                     </div>
                                     <div class="form-group mt-3">
                                         <input type="submit" value="Cari" class="btn btn-primary">
@@ -62,9 +67,11 @@
                         <div>
                             Cukai {{ request()->get('jenis_cukai') }}
                         </div>
-                        <div>
-                            <a href="{{ route('pemasukan.cetak') .'?'. getParams(url()->full()) }}" target="_blank">Cetak</a>
-                        </div>
+                        @if($pemasukan->count() > 0)
+                            <div>
+                                <a href="{{ route('admin.pemasukan.cetak') .'?'. getParams(url()->full()) }}" target="_blank">Cetak</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -93,7 +100,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     {!! request('jenis_cukai') == 'bulanan' ? '<th>'.$row->tgl.'</th>' : '' !!}
-                                    <td>{{ $row->kategori?->nama_kategori ?? 'Tidak Ada' }}</td>
+                                    <td>{{ ucwords($row->kategori?->nama_kategori ?? 'Tidak Ada') }}</td>
                                     <td>{{ $row->pedagang?->nama ?? 'Tidak Ada'}}</td>
                                     <td>{{ $row->keterangan }}</td>
                                     <td>Rp. {{ number_format($row->nominal) }}</td>
@@ -123,23 +130,40 @@
         $('#jenis_cukai').change(function(){
             $('#field-harian').addClass('d-none');
             $('#field-bulanan').addClass('d-none');
+            $('#field-tahunan').addClass('d-none');
 
             if ($(this).val() === 'harian') {
                 $('#field-harian').removeClass('d-none');
                 $('#field-bulanan').addClass('d-none');
+                $('#field-tahunan').addClass('d-none');
+
                 $('#tgl').attr('name', 'tgl');
-                $('#bulan').removeAttr('name');
-                $('#tahun').removeAttr('name');
+                $('#bulan-bulan').removeAttr('name');
+                $('#tahun-bulan').removeAttr('name');
+                $('#tahun-tahun').removeAttr('name');
             }
 
             if ($(this).val() === 'bulanan') {
+                $('#field-tahunan').addClass('d-none');
                 $('#field-bulanan').removeClass('d-none');
                 $('#field-harian').addClass('d-none');
-                $('#bulan').attr('name', 'bulan');
-                $('#tahun').attr('name', 'tahun');
-                $('#tgl').removeAttr('name');
+
+                $('#bulan-bulan').attr('name', 'bulan');
+                $('#tahun-bulan').attr('name', 'tahun');
+                $('#tahun-tahun').removeAttr('name');
+                $('#tgl-tgl').removeAttr('name');
             }
 
+            if ($(this).val() === 'tahunan') {
+                $('#field-tahunan').removeClass('d-none');
+                $('#field-bulanan').addClass('d-none');
+                $('#field-harian').addClass('d-none');
+
+                $('#tgl-tgl').removeAttr('name');
+                $('#bulan-bulan').removeAttr('name');
+                $('#tahun-bulan').removeAttr('name');
+                $('#tahun-tahun').attr('name', 'tahun');
+            }
 
         });
     </script>

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Pedagang;
 
+use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use App\Models\Pedagang;
 use App\Models\Pembayaran;
@@ -13,7 +14,7 @@ class PembayaranController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -22,31 +23,34 @@ class PembayaranController extends Controller
         } else {
             $data['pembayaran'] = Pembayaran::where('pedagang_id', auth()->user()->id)->orderBy('tgl', 'desc')->get();
         }
-        return view('pembayaran.index', $data);
+
+        return view('pedagang.pages.pembayaran.index', $data);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
         $data['pembayaran'] = Pembayaran::getDefaultValues();
         $data['pedagang'] = Pedagang::orderBy('nama', 'asc')->get();
         $data['kategori'] = Kategori::orderBy('nama_kategori', 'asc')->get();
-        return view('pembayaran.form', $data);
+
+        return view('pedagang.pages.pembayaran.form', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         $input = [];
+
         if (auth()->guard('web')->check()) {
             $request->validate([
                 'tgl' => 'required',
@@ -58,7 +62,7 @@ class PembayaranController extends Controller
             ]);
 
             $input = $request->toArray();
-            $redirect = 'pembayaran.index';
+            $redirect = 'pedagang.pembayaran.index';
         } else {
             $request->validate([
                 'tgl' => 'required',
@@ -71,9 +75,12 @@ class PembayaranController extends Controller
             $input['status'] = 0;
             $redirect = 'pedagang.pembayaran.index';
         }
+
         $path = $request->file('bukti_pembayaran')->store('bukti_pembayaran');
         $input['bukti_pembayaran'] = $path;
+
         Pembayaran::create($input);
+
         return redirect()->route($redirect)->with('success', 'Berhasil menambah data pembayaran');
     }
 
@@ -92,14 +99,15 @@ class PembayaranController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
         $data['pembayaran'] = Pembayaran::findOrFail($id);
         $data['pedagang'] = Pedagang::orderBy('nama', 'asc')->get();
         $data['kategori'] = Kategori::orderBy('nama_kategori', 'asc')->get();
-        return view('pembayaran.form', $data);
+
+        return view('pedagang.pages.pembayaran.form', $data);
     }
 
     /**
@@ -107,7 +115,7 @@ class PembayaranController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -124,13 +132,16 @@ class PembayaranController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
         $pembayaran = Pembayaran::findOrfail($id);
+
         Storage::delete($pembayaran->bukti_pembayaran);
+
         $pembayaran->delete();
+
         return redirect()->route('pembayaran.index')->with('success', 'Berhasil menghapus data pembayaran');
     }
 }
