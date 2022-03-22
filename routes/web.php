@@ -40,7 +40,7 @@ Route::middleware(['auth:pedagang'])->prefix('pedagang')
 
 Route::middleware(['auth'])->group(function() {
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('dashboard');
 
         Route::prefix('tempats/{tempat}')->name('tempats.')->group(function () {
             Route::resource('kategori', \App\Http\Controllers\Admin\TempatKategoriController::class);

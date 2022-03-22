@@ -21,16 +21,27 @@ class HomeController extends Controller
         $spending = [];
 
         foreach ($months as $month) {
-            foreach ($pengeluarans as $pengeluaran) {
-                if ($pengeluaran['month_name'] === $month) {
-                    if (array_key_exists($month, $spending)) {
-                        $spending[$month] += $pengeluaran['nominal'];
-                    } else {
-                        $spending[$month] = $pengeluaran['nominal'];
+
+            // if pengeluaran has elements more than 0
+            if (count($pengeluarans) > 0) {
+                foreach ($pengeluarans as $pengeluaran) {
+
+                    // check if pengeluaran month same with $month
+                    if ($pengeluaran['month_name'] === $month) {
+
+                        // if $spending has $month, increment with nominal
+                        // else create new $spending with key $month
+                        if (array_key_exists($month, $spending)) {
+                            $spending[$month] += $pengeluaran['nominal'];
+                        } else {
+                            $spending[$month] = $pengeluaran['nominal'];
+                        }
+                    } elseif (!in_array($month, array_keys($spending))) {
+                        $spending[$month] = 0;
                     }
-                } elseif (!in_array($month, array_keys($spending))) {
-                    $spending[$month] = 0;
                 }
+            } else {
+                $spending[$month] = 0;
             }
         }
 
