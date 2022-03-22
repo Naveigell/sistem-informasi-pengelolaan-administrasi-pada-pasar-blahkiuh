@@ -20,7 +20,8 @@ class Pedagang extends Authenticatable
         'password',
         'lokasi',
         'no_telp',
-        'tgl_bergabung'
+        'tgl_bergabung',
+        'alamat',
     ];
 
     public static function getDefaultValues()
@@ -31,7 +32,8 @@ class Pedagang extends Authenticatable
             'email' => '',
             'lokasi' => '',
             'no_telp' => '',
-            'tgl_bergabung' => ''
+            'tgl_bergabung' => '',
+            'alamat',
         ];
     }
 

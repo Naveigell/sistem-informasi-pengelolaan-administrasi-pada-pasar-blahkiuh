@@ -34,6 +34,7 @@ Route::middleware(['auth:pedagang'])->prefix('pedagang')
     Route::post('/pembayaran/store', [\App\Http\Controllers\Pedagang\PembayaranController::class, 'store'])->name('pembayaran.store');
     Route::get('/pengeluaran', [\App\Http\Controllers\Pedagang\PengeluaranController::class, 'index'])->name('pengeluaran.index');
     Route::resource('tagihans', \App\Http\Controllers\Pedagang\TagihanController::class);
+    Route::post('biodata/password', [\App\Http\Controllers\Pedagang\BiodataController::class, 'password'])->name('biodata.password');
     Route::resource('biodata', \App\Http\Controllers\Pedagang\BiodataController::class);
 });
 
