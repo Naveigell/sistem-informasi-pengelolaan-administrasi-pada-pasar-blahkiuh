@@ -27,7 +27,7 @@ Route::middleware(['auth:pedagang'])->prefix('pedagang')
                                     ->name('pedagang.')
                                     ->group(function() {
 
-    Route::get('/dashboard', [HomeController::class, 'index']);
+    Route::get('/dashboard', [\App\Http\Controllers\Pedagang\HomeController::class, 'index'])->name('dashboard');
     Route::get('/logout', [PedagangLoginController::class, 'logout'])->name('logout');
     Route::get('/pembayaran', [\App\Http\Controllers\Pedagang\PembayaranController::class, 'index'])->name('pembayaran.index');
     Route::get('/pembayaran/create', [\App\Http\Controllers\Pedagang\PembayaranController::class, 'create'])->name('pembayaran.create');

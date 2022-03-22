@@ -100,7 +100,7 @@
                     </li>
                 @else
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ url('dashboard') }}" aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pedagang.dashboard') ? 'active' : '' }}" href="{{ route('pedagang.dashboard') }}" aria-expanded="false">
                             <i class="mdi mdi-av-timer"></i>
                             <span class="hide-menu">Dashboard</span>
                         </a>
