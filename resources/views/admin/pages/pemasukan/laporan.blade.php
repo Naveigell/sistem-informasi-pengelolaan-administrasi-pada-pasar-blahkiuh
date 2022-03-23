@@ -101,7 +101,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     {!! request('jenis_cukai') == 'bulanan' ? '<th>'.$row->tgl.'</th>' : '' !!}
                                     <td>{{ ucwords($row->kategori?->nama_kategori ?? 'Tidak Ada') }}</td>
-                                    <td>{{ $row->pedagang?->nama ?? 'Tidak Ada'}}</td>
+                                    <td>{{ $row->pedagang?->nama ?? '-'}}</td>
                                     <td>{{ $row->keterangan }}</td>
                                     <td>Rp. {{ number_format($row->nominal) }}</td>
                                 </tr>

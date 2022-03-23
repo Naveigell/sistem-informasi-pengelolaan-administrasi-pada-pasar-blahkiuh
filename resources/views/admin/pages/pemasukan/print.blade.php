@@ -74,6 +74,9 @@
                 <td colspan="5" style="text-align: center;">Sub Total {{ $subTotal[$loop->index] }}</td>
                 <td style="font-weight: bold;">Rp. {{ number_format($total, 0, ',', '.') }}</td>
             </tr>
+            @php
+                $total = 0;
+            @endphp
         @endforeach
 
 {{--        <tr>--}}

@@ -164,7 +164,7 @@ class PemasukanController extends Controller
             $pemasukans = Pemasukan::with('kategori')->whereYear('tgl', request('tahun'))->get();
         }
 
-        $pemasukans = $pemasukans->groupBy('kategori.id');
+        $pemasukans = $pemasukans->groupBy('kategori.id')->sortKeys();
 
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('admin.pages.pemasukan.print', compact('pemasukans', 'kategoris'));

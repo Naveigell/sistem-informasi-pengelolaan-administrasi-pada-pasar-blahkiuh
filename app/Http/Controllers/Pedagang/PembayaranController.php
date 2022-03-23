@@ -76,7 +76,7 @@ class PembayaranController extends Controller
             $redirect = 'pedagang.pembayaran.index';
         }
 
-        $path = $request->file('bukti_pembayaran')->store('bukti_pembayaran');
+        $path = $request->file('bukti_pembayaran')->store('public/bukti_pembayaran');
         $input['bukti_pembayaran'] = $path;
 
         Pembayaran::create($input);

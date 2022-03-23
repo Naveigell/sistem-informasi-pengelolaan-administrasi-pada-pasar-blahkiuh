@@ -48,7 +48,7 @@
                                     <td>{{ $row->pedagang?->nama ?? 'Tidak Ada'}}</td>
                                     <td>{{ $row->tgl }}</td>
                                     <td>Rp. {{ number_format($row->nominal) }}</td>
-                                    <td><a href="{{ asset('storage/' . $row->bukti_pembayaran) }}" target="_blank">Lihat bukti</a></td>
+                                    <td><a href="{{ asset('storage/' . str_replace(['public/'] , [''], $row->bukti_pembayaran)) }}" target="_blank">Lihat bukti</a></td>
                                     <td>{{ $row->status }}</td>
                                     <td>{{ $row->keterangan }}</td>
                                     @if (auth()->guard('web')->check())
