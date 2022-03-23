@@ -65,6 +65,7 @@
                         <h5 class="card-title text-uppercase">Pengeluaran dan Pemasukan Pada Tahun {{ date('Y') }}</h5>
                         <ul class="list-inline dl mb-0 ml-auto">
                             <li class="list-inline-item text-danger"><i class="fa fa-circle"></i> Pengeluaran</li>
+                            <li class="list-inline-item text-info"><i class="fa fa-circle"></i> Pemasukan</li>
                         </ul>
                     </div>
 

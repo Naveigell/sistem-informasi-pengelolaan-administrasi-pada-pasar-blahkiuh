@@ -37,9 +37,9 @@
                 <div style="margin-bottom:10px">
                     <img src="{{ public_path('img/logo.png') }}" alt="logo" width="80">
                 </div>
-                <h2>{{ env("APP_NAME") }}</h2>
-                <p>{{ env("APP_ADDRESS") }}</p>
-                <p>P: {{ env("APP_PHONE") }}</p>
+                <h2>Pasar Tradisional Blahkiuh</h2>
+                <p>Alamat: Jl. Ciung Wanara Blahkiuh, Abinsemal, Badung</p>
+                <p>Tlp : 088219162457</p>
             </div>
             <hr>
             <h3>Laporan Pengeluaran</h3>
@@ -51,7 +51,6 @@
                     <th>#</th>
                     <th>Tgl</th>
                     <th>Nama Pengeluaran</th>
-                    <th>Keterangan</th>
                     <th>Nominal</th>
                 </tr>
             </thead>
@@ -63,12 +62,10 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $row->tgl }}</td>
                         <td>{{ $row->nama_pengeluaran }}</td>
-                        <td>{{ $row->keterangan }}</td>
                         <td>Rp. {{ number_format($row->nominal) }}</td>
                     </tr>
                 @endforeach
                 <tr>
-                    <td></td>
                     <td></td>
                     <td></td>
                     <th>Total</th>

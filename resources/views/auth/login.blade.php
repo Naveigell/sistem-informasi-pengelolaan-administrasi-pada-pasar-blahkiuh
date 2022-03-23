@@ -24,12 +24,15 @@
 </head>
 <body>
 <div class="main-wrapper">
-    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background-color: #a9d0fc;">
+    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background-color: #B0C4DE;">
         <div class="auth-box">
             <div id="loginform">
                 <div class="logo">
-                    <span class="db"><img src="{{ asset('assets/images/logos/logo-icon.png') }}" alt="logo"></span>
-                    <h5 class="font-medium mb-3">Sign In to Admin</h5>
+{{--                    <span class="db" style="font-size: 40px;"><i class="fa fa-user-circle"></i></span>--}}
+                    <span class="db"><img src="{{ asset('img/logo.png') }}" style="width: 90px; height: 90px;" alt="logo"></span>
+                    <h5 class="font-medium mb-3 mt-3 font-weight-bold" style="color: #5f5f5f;">
+                        Sign In To Admin
+                    </h5>
                 </div>
                 <!-- Form -->
                 <div class="row">

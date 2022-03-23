@@ -36,7 +36,7 @@
                                     <td>{{ $row->tgl }}</td>
                                     <td>Rp. {{ number_format($row->nominal) }}</td>
                                     <td>{{ $row->keterangan }}</td>
-                                    <td><a href="{{ asset('storage/' . $row->bukti_pengeluaran) }}" target="_blank">Lihat bukti</a></td>
+                                    <td><a href="{{ asset('storage/' . str_replace('public/', '', $row->bukti_pengeluaran)) }}" target="_blank">Lihat bukti</a></td>
                                     <td>{{ $row->user->nama }}</td>
                                     @if(auth()->user()->level == 'Admin/Bendahara')
                                         <td>

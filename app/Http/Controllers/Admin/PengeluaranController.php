@@ -47,7 +47,7 @@ class PengeluaranController extends Controller
             'nominal' => 'required',
             'bukti_pengeluaran' => 'required|image|mimes:jpg,jpeg,png',
         ]);
-        $path = $request->file('bukti_pengeluaran')->store('bukti_pengeluaran');
+        $path = $request->file('bukti_pengeluaran')->store('public/bukti_pengeluaran');
         $input = $request->toArray();
         $input['user_id'] = auth()->user()->id;
         $input['bukti_pengeluaran'] = $path;
@@ -96,7 +96,7 @@ class PengeluaranController extends Controller
             'nominal' => 'required',
             'bukti_pengeluaran' => 'required|image|mimes:jpg,jpeg,png',
         ]);
-        $path = $request->file('bukti_pengeluaran')->store('bukti_pengeluaran');
+        $path = $request->file('bukti_pengeluaran')->store('public/bukti_pengeluaran');
         $input = $request->toArray();
         $input['user_id'] = auth()->user()->id;
         $input['bukti_pengeluaran'] = $path;
@@ -116,7 +116,7 @@ class PengeluaranController extends Controller
     {
         Pengeluaran::findOrfail($id)->delete();
 
-        return redirect()->route('pengeluaran.index')->with('success', 'Berhasil menghapus data pengeluaran');
+        return redirect()->route('admin.pengeluaran.index')->with('success', 'Berhasil menghapus data pengeluaran');
     }
 
     public function laporan()
