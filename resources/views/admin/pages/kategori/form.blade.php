@@ -48,6 +48,25 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label class="col-md-4 col-form-label text-md-end"></label>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check form-check-inline">
+                                        <div class="custom-control custom-checkbox">
+                                            <input name="is_automatic" type="checkbox" class="custom-control-input" id="customCheck3">
+                                            <label class="custom-control-label" for="customCheck3">Otomatis ke pemasukan?</label>
+                                        </div>
+                                    </div>
+                                    @error('is_automatic')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <div class="col-md-8 offset-md-4">
                                     <input type="submit" value="Simpan" class="btn btn-primary">
                                 </div>

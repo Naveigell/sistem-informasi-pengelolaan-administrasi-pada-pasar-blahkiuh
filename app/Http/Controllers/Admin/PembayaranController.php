@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use App\Models\Pedagang;
+use App\Models\Pemasukan;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -119,10 +120,23 @@ class PembayaranController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Pembayaran::find($id)->update($request->toArray());
+        $pembayaran = Pembayaran::with('kategori')->findOrFail($id);
+        $pembayaran->update($request->toArray());
 
         if ($request->status == 1) {
             $text = 'acc';
+
+            if ($pembayaran->kategori->is_automatic) {
+                Pemasukan::query()->create([
+                    "pedagang_id" => $pembayaran->pedagang_id,
+                    "kategori_id" => $pembayaran->kategori_id,
+                    "nominal"     => $pembayaran->nominal,
+                    "tgl"         => $pembayaran->tgl,
+                    "keterangan"  => $pembayaran->keterangan,
+                    "user_id"     => auth('web')->id(),
+                ]);
+            }
+
         } else if ($request->status == 2) {
             $text = 'menolak';
         }

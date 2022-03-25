@@ -19,6 +19,7 @@
                                 <th>#</th>
                                 <th>Nama Kategori</th>
                                 <th>Pedagang</th>
+                                <th>Otomatis</th>
                                 @if(auth()->user()->level == 'Admin/Bendahara')
                                     <th>Aksi</th>
                                 @endif
@@ -30,6 +31,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ ucwords($row->nama_kategori) }}</td>
                                     <td>{{ $row->is_pedagang ? 'Iya' : '-'  }}</td>
+                                    <td>{{ $row->is_automatic ? 'Iya' : '-'  }}</td>
                                     @if(auth()->user()->level == 'Admin/Bendahara')
                                         <td>
                                             <form action="{{ route('admin.kategori.destroy', $row) }}" method="post">

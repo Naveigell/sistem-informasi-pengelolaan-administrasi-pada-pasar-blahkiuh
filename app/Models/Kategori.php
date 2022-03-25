@@ -16,7 +16,8 @@ class Kategori extends Model
 
     protected $fillable = [
         'nama_kategori',
-        'is_pedagang'
+        'is_pedagang',
+        'is_automatic',
     ];
 
     public static function getDefaultValues()
@@ -35,5 +36,10 @@ class Kategori extends Model
     public function setIsPedagangAttribute($value)
     {
         $this->attributes['is_pedagang'] = $value ? 1 : 0;
+    }
+
+    public function setIsAutomaticAttribute($value)
+    {
+        $this->attributes['is_automatic'] = $value ? 1 : 0;
     }
 }

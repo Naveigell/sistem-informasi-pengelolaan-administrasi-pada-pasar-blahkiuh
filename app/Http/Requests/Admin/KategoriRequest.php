@@ -16,6 +16,7 @@ class KategoriRequest extends FormRequest
         return [
             "nama_kategori" => "required|string|min:3|max:255",
             "is_pedagang"   => "nullable",
+            "is_automatic"   => "nullable",
         ];
     }
 
@@ -24,6 +25,12 @@ class KategoriRequest extends FormRequest
         if (!$this->get('is_pedagang')) {
             $this->request->add([
                 "is_pedagang" => 0,
+            ]);
+        }
+
+        if (!$this->get('is_automatic')) {
+            $this->request->add([
+                "is_automatic" => 0,
             ]);
         }
     }
