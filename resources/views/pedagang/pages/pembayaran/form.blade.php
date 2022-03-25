@@ -34,6 +34,26 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end">Nomor Tagihan</label>
+
+                            <div class="col-md-6">
+
+                                <select class="form-select select2" name="tagihan_id" id="tagihan">
+                                    <option value="">Tidak ada</option>
+                                    @foreach($tagihans as $option)
+                                        <option data-keterangan="{{ $option->tempatKategori->nama_kategori }}" data-nominal="{{ $option->nominal }}" value="{{ $option->id }}" {{ $option->id == old('tagihan_id', $pembayaran->tagihan_id) ? 'selected' : '' }}>{{ $option->no_tagihan }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('tagihan_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         @if (auth()->guard('web')->check())
                             <div class="row mb-3">
                                 <label class="col-md-4 col-form-label text-md-end">{{ __('Pedagang') }}</label>
@@ -60,7 +80,7 @@
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Tanggal') }}</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control datepicker @error('tgl') is-invalid @enderror" name="tgl" value="{{ old('tgl', $pembayaran->tgl) }}">
+                                <input id="tgl" type="text" class="form-control datepicker @error('tgl') is-invalid @enderror" name="tgl" value="{{ old('tgl', $pembayaran->tgl) }}">
 
                                 @error('tgl')
                                     <span class="invalid-feedback" role="alert">
@@ -74,7 +94,7 @@
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Nominal') }}</label>
 
                             <div class="col-md-6">
-                                <input type="number" class="form-control @error('nominal') is-invalid @enderror" name="nominal" value="{{ old('nominal', $pembayaran->nominal) }}">
+                                <input id="nominal" type="number" class="form-control @error('nominal') is-invalid @enderror" name="nominal" value="{{ old('nominal', $pembayaran->nominal) }}">
 
                                 @error('nominal')
                                     <span class="invalid-feedback" role="alert">
@@ -102,7 +122,7 @@
                             <label class="col-md-4 col-form-label text-md-end">Keterangan</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control @error('keterangan') is-invalid @enderror" name="keterangan">{{ old('keterangan', $pembayaran->keterangan) }}</textarea>
+                                <textarea id="keterangan" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan">{{ old('keterangan', $pembayaran->keterangan) }}</textarea>
 
                                 @error('keterangan')
                                     <span class="invalid-feedback" role="alert">
@@ -146,3 +166,22 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $('#tagihan').on('change', function () {
+            let nominal    = $(this).find(':selected').data('nominal');
+            let keterangan = $(this).find(':selected').data('keterangan');
+
+            $('#nominal').val(nominal);
+            $('#keterangan').val(keterangan);
+
+            let currentDate = new Date()
+            let day         = currentDate.getDate()
+            let month       = currentDate.getMonth() + 1
+            let year        = currentDate.getFullYear();
+
+            $('#tgl').val(year + '-' + month + '-' + day);
+        })
+    </script>
+@endpush

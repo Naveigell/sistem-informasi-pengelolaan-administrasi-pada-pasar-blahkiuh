@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use App\Models\Pedagang;
 use App\Models\Pembayaran;
+use App\Models\Tagihan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -37,6 +38,7 @@ class PembayaranController extends Controller
         $data['pembayaran'] = Pembayaran::getDefaultValues();
         $data['pedagang'] = Pedagang::orderBy('nama', 'asc')->get();
         $data['kategori'] = Kategori::orderBy('nama_kategori', 'asc')->get();
+        $data['tagihans'] = Tagihan::with('tempatKategori')->get();
 
         return view('pedagang.pages.pembayaran.form', $data);
     }
@@ -58,7 +60,8 @@ class PembayaranController extends Controller
                 'kategori_id' => 'required',
                 'pedagang_id' => 'required',
                 'bukti_pembayaran' => 'required',
-                'status' => 'required'
+                'status' => 'required',
+                'keterangan' => 'required',
             ]);
 
             $input = $request->toArray();
@@ -69,6 +72,7 @@ class PembayaranController extends Controller
                 'nominal' => 'required',
                 'kategori_id' => 'required',
                 'bukti_pembayaran' => 'required',
+                'keterangan' => 'required',
             ]);
             $input = $request->toArray();
             $input['pedagang_id'] = auth()->user()->id;

@@ -15,6 +15,7 @@ class Pembayaran extends Model
     protected $fillable = [
         'pedagang_id',
         'kategori_id',
+        'tagihan_id',
         'nominal',
         'tgl',
         'bukti_pembayaran',
@@ -37,6 +38,7 @@ class Pembayaran extends Model
         return (object) [
             'pedagang_id' => '',
             'kategori_id' => '',
+            'tagihan_id' => '',
             'nominal' => '',
             'tgl' => '',
             'bukti_pembayaran' => '',
