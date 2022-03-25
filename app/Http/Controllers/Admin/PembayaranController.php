@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kategori;
+use App\Models\Kwitansi;
 use App\Models\Pedagang;
 use App\Models\Pemasukan;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -127,15 +129,24 @@ class PembayaranController extends Controller
             $text = 'acc';
 
             if ($pembayaran->kategori->is_automatic) {
+
                 Pemasukan::query()->create([
                     "pedagang_id" => $pembayaran->pedagang_id,
                     "kategori_id" => $pembayaran->kategori_id,
-                    "nominal"     => $pembayaran->nominal,
-                    "tgl"         => $pembayaran->tgl,
-                    "keterangan"  => $pembayaran->keterangan,
-                    "user_id"     => auth('web')->id(),
+                    "nominal" => $pembayaran->nominal,
+                    "tgl" => $pembayaran->tgl,
+                    "keterangan" => $pembayaran->keterangan,
+                    "user_id" => auth('web')->id(),
                 ]);
+
             }
+
+            Kwitansi::query()->create([
+                "pedagang_id" => $pembayaran->pedagang_id,
+                "tgl" => $pembayaran->tgl,
+                "nominal" => $pembayaran->nominal,
+                "keterangan" => $pembayaran->keterangan,
+            ]);
 
         } else if ($request->status == 2) {
             $text = 'menolak';
