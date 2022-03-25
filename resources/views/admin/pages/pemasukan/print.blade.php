@@ -53,8 +53,9 @@
     <table class="table">
         <tbody>
         @php
-            $total    = 0;
-            $subTotal = range('A', 'Z');
+            $total     = 0;
+            $subTotal  = range('A', 'Z');
+            $fullTotal = 0;
         @endphp
         @foreach($pemasukans as $kategoriId => $pemasukan)
             <tr>
@@ -68,6 +69,7 @@
                 </tr>
                 @php
                     $total += $kategori->nominal;
+                    $fullTotal += $kategori->nominal;
                 @endphp
             @endforeach
             <tr>
@@ -79,15 +81,12 @@
             @endphp
         @endforeach
 
-{{--        <tr>--}}
-{{--            <td></td>--}}
-{{--            <td></td>--}}
-{{--            <td></td>--}}
-{{--            {!! request('jenis_cukai') == 'bulanan' ? '<td></td>' : '' !!}--}}
-{{--            <td>Total</td>--}}
-{{--            <td>Rp. {{ number_format($total) }}</td>--}}
-{{--        </tr>--}}
+        <tr>
+            <td colspan="5">Total</td>
+            <td style="font-weight: bold;">Rp. {{ number_format($fullTotal) }}</td>
+        </tr>
         </tbody>
+
     </table>
 </div>
 </body>

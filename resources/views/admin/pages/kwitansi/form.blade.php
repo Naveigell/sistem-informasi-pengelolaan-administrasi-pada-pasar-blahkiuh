@@ -91,7 +91,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-4">
-                                <input type="submit" value="Simpan" class="btn btn-primary">
+                                <input type="submit" value="Simpan" onclick="return confirm('Apakah data ini sudah benar?');" class="btn btn-primary">
                             </div>
                         </div>
                     </form>

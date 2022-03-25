@@ -10,8 +10,22 @@ class Tagihan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'tempat_kategori_id', 'pedagang_id', 'nominal',
+        'no_tagihan', 'tempat_kategori_id', 'pedagang_id', 'nominal',
     ];
+
+    public function setPedagangIdAttribute($value)
+    {
+        $this->attributes['pedagang_id'] = $value;
+
+        $index      = 1;
+        $latestItem = self::query()->latest()->first();
+
+        if ($latestItem) {
+            $index = $latestItem->id + 1;
+        }
+
+        $this->attributes['no_tagihan'] = 'TG-' . str_repeat('0', 4 - strlen((string) $index)) . $index;
+    }
 
     public function jenisTagihan()
     {

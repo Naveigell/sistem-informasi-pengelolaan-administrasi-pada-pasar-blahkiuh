@@ -22,6 +22,7 @@ class Pedagang extends Authenticatable
         'no_telp',
         'tgl_bergabung',
         'alamat',
+        'jenis_dagangan',
     ];
 
     public static function getDefaultValues()
@@ -33,7 +34,8 @@ class Pedagang extends Authenticatable
             'lokasi' => '',
             'no_telp' => '',
             'tgl_bergabung' => '',
-            'alamat',
+            'alamat' => '',
+            'jenis_dagangan' => '',
         ];
     }
 

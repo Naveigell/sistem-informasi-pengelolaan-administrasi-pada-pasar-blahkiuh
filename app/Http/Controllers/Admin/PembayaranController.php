@@ -120,6 +120,7 @@ class PembayaranController extends Controller
     public function update(Request $request, $id)
     {
         Pembayaran::find($id)->update($request->toArray());
+
         if ($request->status == 1) {
             $text = 'acc';
         } else if ($request->status == 2) {

@@ -25,12 +25,12 @@
                                 <th>Keterangan</th>
                                 <th>Tgl</th>
                                 <th>Nominal</th>
-                                @if (auth()->guard('web')->check())
-                                    <th>User</th>
-                                    @if(auth()->user()->level == 'Admin/Bendahara')
-                                        <th>Aksi</th>
-                                    @endif
-                                @endif
+{{--                                @if (auth()->guard('web')->check())--}}
+{{--                                    <th>User</th>--}}
+{{--                                    @if(auth()->user()->level == 'Admin/Bendahara')--}}
+{{--                                        <th>Aksi</th>--}}
+{{--                                    @endif--}}
+{{--                                @endif--}}
                             </tr>
                             </thead>
                             <tbody>
@@ -43,19 +43,19 @@
                                     <td>{{ $row->keterangan }}</td>
                                     <td>{{ $row->tgl }}</td>
                                     <td>Rp. {{ number_format($row->nominal) }}</td>
-                                    @if (auth()->guard('web')->check())
-                                        <td>{{ $row->user->nama }}</td>
-                                        @if(auth()->user()->level == 'Admin/Bendahara')
-                                            <td>
-                                                <form action="{{ route('admin.kategori.pemasukan.destroy', [$kategori, $row]) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <a href="{{ route('admin.kategori.pemasukan.edit', [$kategori, $row]) }}" class="btn btn-sm btn-warning text-white" title="Edit"><i class="fa fa-cog"></i></a>
-                                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin untuk menghapus data?')"><i class="fa fa-trash"></i></button>
-                                                </form>
-                                            </td>
-                                        @endif
-                                    @endif
+{{--                                    @if (auth()->guard('web')->check())--}}
+{{--                                        <td>{{ $row->user->nama }}</td>--}}
+{{--                                        @if(auth()->user()->level == 'Admin/Bendahara')--}}
+{{--                                            <td>--}}
+{{--                                                <form action="{{ route('admin.kategori.pemasukan.destroy', [$kategori, $row]) }}" method="post">--}}
+{{--                                                    @csrf--}}
+{{--                                                    @method('delete')--}}
+{{--                                                    <a href="{{ route('admin.kategori.pemasukan.edit', [$kategori, $row]) }}" class="btn btn-sm btn-warning text-white" title="Edit"><i class="fa fa-cog"></i></a>--}}
+{{--                                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin untuk menghapus data?')"><i class="fa fa-trash"></i></button>--}}
+{{--                                                </form>--}}
+{{--                                            </td>--}}
+{{--                                        @endif--}}
+{{--                                    @endif--}}
                                 </tr>
                             @endforeach
                             </tbody>

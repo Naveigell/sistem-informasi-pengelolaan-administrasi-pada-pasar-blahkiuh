@@ -49,6 +49,7 @@ class PedagangController extends Controller
             'password' => 'required',
             'no_telp' => 'required',
             'tgl_bergabung' => 'required',
+            'jenis_dagangan' => 'required',
         ]);
 
         $input = $request->toArray();
@@ -98,6 +99,7 @@ class PedagangController extends Controller
             'email' => 'required',
             'no_telp' => 'required',
             'tgl_bergabung' => 'required',
+            'jenis_dagangan' => 'required',
         ]);
 
         $input = $request->toArray();

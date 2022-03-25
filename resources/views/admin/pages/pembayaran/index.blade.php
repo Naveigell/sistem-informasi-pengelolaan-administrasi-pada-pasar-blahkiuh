@@ -59,20 +59,17 @@
                                                         @csrf
                                                         @method('PUT')
                                                         <input type="hidden" name="status" value="1">
+                                                        <input type="hidden" name="keterangan" value="sudah lunas">
                                                         <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Apakah anda yakin untuk meng-acc pembayaran?')"><i class="fa fa-check"></i></button>
                                                     </form>
-                                                    <form action="{{ route('admin.pembayaran.update', $row->id) }}" method="post">
+                                                    <form action="{{ route('admin.pembayaran.update', $row->id) }}" method="post" id="decline-{{ $row->id }}">
                                                         @csrf
                                                         @method('PUT')
                                                         <input type="hidden" name="status" value="2">
-                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin untuk menolak pembayaran?')"><i class="fa fa-times"></i></button>
+                                                        <input type="hidden" name="keterangan" id="keterangan-{{ $row->id }}">
+                                                        <button type="button" class="btn btn-sm btn-danger" onclick="return declineInformation({{ $row->id }})"><i class="fa fa-times"></i></button>
                                                     </form>
                                                 @endif
-                                                <form action="{{ route('admin.pembayaran.destroy', $row->id) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin untuk menghapus data?')"><i class="fa fa-trash"></i></button>
-                                                </form>
                                             </td>
                                         @endif
                                     @endif
@@ -86,3 +83,16 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function declineInformation(id) {
+            let information = prompt("Alasan menolak : ");
+
+            if (!(information == null && information === "")) {
+                $('#keterangan-' + id).val(information);
+                $('#decline-' + id).submit();
+            }
+        }
+    </script>
+@endpush

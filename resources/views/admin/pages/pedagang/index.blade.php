@@ -22,6 +22,7 @@
                                 <th>Tempat</th>
                                 <th>No. Telp</th>
                                 <th>Tgl. Bergabung</th>
+                                <th>Jenis Dagangan</th>
                                 @if(auth()->user()->level == 'Admin/Bendahara')
                                     <th>Aksi</th>
                                 @endif
@@ -36,6 +37,7 @@
                                     <td>{{ $row->tempat->nama_tempat }}{{ $row->position ? ' - ' . $row->position : '' }}</td>
                                     <td>{{ $row->no_telp }}</td>
                                     <td>{{ $row->tgl_bergabung }}</td>
+                                    <td>{{ $row->jenis_dagangan }}</td>
                                     @if(auth()->user()->level == 'Admin/Bendahara')
                                     <td>
                                         <form action="{{ route('admin.pedagang.destroy', $row->id) }}" method="post">

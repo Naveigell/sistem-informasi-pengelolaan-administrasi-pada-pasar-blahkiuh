@@ -23,9 +23,9 @@
                                 <th>Keterangan</th>
                                 <th>Bukti Pengeluaran</th>
                                 <th>User</th>
-                                @if(auth()->user()->level == 'Admin/Bendahara')
-                                    <th>Aksi</th>
-                                @endif
+{{--                                @if(auth()->user()->level == 'Admin/Bendahara')--}}
+{{--                                    <th>Aksi</th>--}}
+{{--                                @endif--}}
                             </tr>
                         </thead>
                         <tbody>
@@ -38,16 +38,16 @@
                                     <td>{{ $row->keterangan }}</td>
                                     <td><a href="{{ asset('storage/' . str_replace('public/', '', $row->bukti_pengeluaran)) }}" target="_blank">Lihat bukti</a></td>
                                     <td>{{ $row->user->nama }}</td>
-                                    @if(auth()->user()->level == 'Admin/Bendahara')
-                                        <td>
-                                            <form action="{{ route('admin.pengeluaran.destroy', $row->id) }}" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <a href="{{ route('admin.pengeluaran.edit', $row->id) }}" class="btn btn-sm btn-warning text-white" title="Edit"><i class="fa fa-cog"></i></a>
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin untuk menghapus data?')"><i class="fa fa-trash"></i></button>
-                                            </form>
-                                        </td>
-                                    @endif
+{{--                                    @if(auth()->user()->level == 'Admin/Bendahara')--}}
+{{--                                        <td>--}}
+{{--                                            <form action="{{ route('admin.pengeluaran.destroy', $row->id) }}" method="post">--}}
+{{--                                                @csrf--}}
+{{--                                                @method('delete')--}}
+{{--                                                <a href="{{ route('admin.pengeluaran.edit', $row->id) }}" class="btn btn-sm btn-warning text-white" title="Edit"><i class="fa fa-cog"></i></a>--}}
+{{--                                                <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin untuk menghapus data?')"><i class="fa fa-trash"></i></button>--}}
+{{--                                            </form>--}}
+{{--                                        </td>--}}
+{{--                                    @endif--}}
                                 </tr>
 
                             @endforeach

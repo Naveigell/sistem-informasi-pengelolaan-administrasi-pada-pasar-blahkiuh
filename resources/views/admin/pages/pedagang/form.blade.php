@@ -88,10 +88,24 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end">Jenis Dagangan</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control @error('jenis_dagangan') is-invalid @enderror" name="jenis_dagangan" value="{{ old('jenis_dagangan', $pedagang->jenis_dagangan) }}">
+
+                                @error('jenis_dagangan')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Tgl. Bergabung') }}</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control datepicker @error('tgl_bergabung') is-invalid @enderror" name="tgl_bergabung" value="{{ old('tgl_bergabung', $pedagang->tgl_bergabung) }}">
+                                <input type="date" class="form-control @error('tgl_bergabung') is-invalid @enderror" readonly name="tgl_bergabung" value="{{ old('tgl_bergabung', date('Y-m-d')) }}">
 
                                 @error('tgl_bergabung')
                                     <span class="invalid-feedback" role="alert">
