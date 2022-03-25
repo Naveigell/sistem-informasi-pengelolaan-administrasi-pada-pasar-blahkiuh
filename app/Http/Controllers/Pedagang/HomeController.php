@@ -12,8 +12,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $pembayaran = Pembayaran::query()->where('pedagang_id', auth('pedagang')->id())->count();
-        $tagihan    = Tagihan::query()->where('pedagang_id', auth('pedagang')->id())->count();
+        $pembayaran = Pembayaran::query()->where('pedagang_id', auth('pedagang')->id())->sum('nominal');
+        $tagihan    = Tagihan::query()->where('pedagang_id', auth('pedagang')->id())->sum('nominal');
 
         $pengeluarans = Pembayaran::query()->addSelect(["month_name" => DB::raw('MONTHNAME(tgl) AS month_name'), "nominal"])->where('pedagang_id', auth('pedagang')->id())->get()->toArray();
 

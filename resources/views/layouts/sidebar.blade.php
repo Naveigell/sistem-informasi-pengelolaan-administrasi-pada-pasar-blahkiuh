@@ -158,7 +158,7 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('pedagang.pengeluaran.index') ? 'active' : '' }}" href="{{ route('pedagang.pengeluaran.index') }}" aria-expanded="false">
                             <i class="mdi mdi-upload"></i>
-                            <span class="hide-menu">History Pengeluaran</span>
+                            <span class="hide-menu">History Pembayaran</span>
                         </a>
                     </li>
 

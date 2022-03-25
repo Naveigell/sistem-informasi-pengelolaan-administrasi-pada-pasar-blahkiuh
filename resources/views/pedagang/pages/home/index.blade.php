@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <div class="ml-auto">
-                        <h2 class="display-7 mb-0">{{ $tagihan }}</h2>
+                        <h2 class="display-7 mb-0">Rp. {{ number_format($tagihan, 0, ',', '.') }}</h2>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="ml-auto">
-                        <h2 class="display-7 mb-0">{{ $pembayaran }}</h2>
+                        <h2 class="display-7 mb-0">Rp. {{ number_format($pembayaran, 0, ',', '.') }}</h2>
                     </div>
                 </div>
             </div>

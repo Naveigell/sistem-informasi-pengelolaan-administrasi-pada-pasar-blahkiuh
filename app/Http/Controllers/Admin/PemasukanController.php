@@ -140,14 +140,21 @@ class PemasukanController extends Controller
     public function laporan()
     {
         $data['pemasukan'] = [];
+        $data['categories']  = Kategori::query()->pluck('nama_kategori', 'id');
 
         if(request('jenis_cukai') == 'harian') {
-            $data['pemasukan'] = Pemasukan::where('tgl', request('tgl'))->get();
+            $data['pemasukan'] = Pemasukan::where('tgl', request('tgl'));
         } else if (request('jenis_cukai') == 'bulanan') {
-            $data['pemasukan'] = Pemasukan::whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'))->get();
+            $data['pemasukan'] = Pemasukan::whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'));
         } else {
-            $data['pemasukan'] = Pemasukan::whereYear('tgl', request('tahun'))->get();
+            $data['pemasukan'] = Pemasukan::whereYear('tgl', request('tahun'));
         }
+
+        if (\request()->filled('kategori')) {
+            $data['pemasukan'] = $data['pemasukan']->where('kategori_id', \request()->query('kategori'));
+        }
+
+        $data['pemasukan'] = $data['pemasukan']->get();
 
         return view('admin.pages.pemasukan.laporan', $data);
     }
@@ -157,14 +164,18 @@ class PemasukanController extends Controller
         $kategoris  = Kategori::query()->pluck('nama_kategori', 'id');
 
         if(request('jenis_cukai') == 'harian') {
-            $pemasukans = Pemasukan::with('kategori')->where('tgl', request('tgl'))->get();
+            $pemasukans = Pemasukan::with('kategori')->where('tgl', request('tgl'));
         } else if (request('jenis_cukai') == 'bulanan') {
-            $pemasukans = Pemasukan::with('kategori')->whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'))->get();
+            $pemasukans = Pemasukan::with('kategori')->whereYear('tgl', request('tahun'))->whereMonth('tgl', request('bulan'));
         } else {
-            $pemasukans = Pemasukan::with('kategori')->whereYear('tgl', request('tahun'))->get();
+            $pemasukans = Pemasukan::with('kategori')->whereYear('tgl', request('tahun'));
         }
 
-        $pemasukans = $pemasukans->groupBy('kategori.id')->sortKeys();
+        if (\request()->filled('kategori')) {
+            $pemasukans = $pemasukans->where('kategori_id', \request()->query('kategori'));
+        }
+
+        $pemasukans = $pemasukans->get()->groupBy('kategori.id')->sortKeys();
 
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('admin.pages.pemasukan.print', compact('pemasukans', 'kategoris'));

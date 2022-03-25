@@ -13,6 +13,15 @@
                             <div class="col-md-12">
                                 <form action="" method="get">
                                     <div class="form-group">
+                                        <label for="">Jenis Pemasukan</label>
+                                        <select name="kategori" id="" class="form-select select2">
+                                            <option value="">Pilih</option>
+                                            @foreach($categories as $id => $categoryName)
+                                                <option {{ request('kategori') == $id ? 'selected' : '' }} value="{{ $id }}">{{ $categoryName }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label>Jenis Cukai</label>
                                         <select name="jenis_cukai" class="form-select select2" id="jenis_cukai">
                                             <option value="">Pilih</option>

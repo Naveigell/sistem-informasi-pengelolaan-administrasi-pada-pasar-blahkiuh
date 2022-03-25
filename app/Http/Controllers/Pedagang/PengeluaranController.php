@@ -16,7 +16,13 @@ class PengeluaranController extends Controller
      */
     public function index()
     {
-        $pengeluaran = Pemasukan::with('pedagang')->where('pedagang_id', auth()->id())->orderBy('tgl')->get();
+        $pengeluaran = Pemasukan::with('pedagang')->where('pedagang_id', auth()->id())->orderBy('tgl');
+
+        if (\request()->filled('from') && \request()->filled('to')) {
+            $pengeluaran->whereBetween('tgl', [\request()->query('from'), \request()->query('to')]);
+        }
+
+        $pengeluaran = $pengeluaran->get();
 
         return view('pedagang.pages.pengeluaran.index', compact('pengeluaran'));
     }
