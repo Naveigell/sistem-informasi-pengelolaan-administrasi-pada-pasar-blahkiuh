@@ -30,7 +30,11 @@
                                 <th>Pedagang</th>
                                 <th>Tgl</th>
                                 <th>Nominal</th>
-                                <th>Bukti Pembayaran</th>
+                                @if(request()->query('type') === 'non-tunai')
+                                    <th>Bukti Pembayaran</th>
+                                @else
+                                    <th>Cetak Kwitansi</th>
+                                @endif
                                 <th>Status</th>
                                 <th>Keterangan</th>
                                 @if (auth()->guard('web')->check())
@@ -48,7 +52,13 @@
                                     <td>{{ $row->pedagang?->nama ?? 'Tidak Ada'}}</td>
                                     <td>{{ $row->tgl }}</td>
                                     <td>Rp. {{ number_format($row->nominal) }}</td>
-                                    <td><a href="{{ asset('storage/' . str_replace('public/', '', $row->bukti_pembayaran)) }}" target="_blank">Lihat bukti</a></td>
+                                    @if(request()->query('type') === 'non-tunai')
+                                        <td><a href="{{ asset('storage/' . str_replace('public/', '', $row->bukti_pembayaran)) }}" target="_blank">Lihat bukti</a></td>
+                                    @else
+                                        <td>
+                                            <a href="{{ $row->kwitansi ? route('admin.kwitansi.show', $row->kwitansi) : '' }}" class="btn btn-sm btn-info"><i class="fa fa-print"></i></a>
+                                        </td>
+                                    @endif
                                     <td>{{ $row->status }}</td>
                                     <td>{{ $row->keterangan }}</td>
                                     @if (auth()->guard('web')->check())
@@ -69,6 +79,8 @@
                                                         <input type="hidden" name="keterangan" id="keterangan-{{ $row->id }}">
                                                         <button type="button" class="btn btn-sm btn-danger" onclick="return declineInformation({{ $row->id }})"><i class="fa fa-times"></i></button>
                                                     </form>
+                                                @else
+                                                    -
                                                 @endif
                                             </td>
                                         @endif
@@ -89,7 +101,7 @@
         function declineInformation(id) {
             let information = prompt("Alasan menolak : ");
 
-            if (!(information == null && information === "")) {
+            if (!(information == null || information === "")) {
                 $('#keterangan-' + id).val(information);
                 $('#decline-' + id).submit();
             }

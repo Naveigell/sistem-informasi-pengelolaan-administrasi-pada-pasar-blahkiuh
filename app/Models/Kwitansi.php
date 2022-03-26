@@ -15,6 +15,7 @@ class Kwitansi extends Model
     protected $fillable = [
         'no_kwitansi',
         'pedagang_id',
+        'pembayaran_id',
         'tgl',
         'nominal',
         'terbilang',
@@ -26,6 +27,7 @@ class Kwitansi extends Model
         return (object) [
             'no_kwitansi' => '',
             'pedagang_id' => '',
+            'pembayaran_id' => '',
             'tgl' => '',
             'nominal' => '',
             'terbilang' => '',
@@ -33,10 +35,15 @@ class Kwitansi extends Model
         ];
     }
 
+    public function setNominalAttribute($value)
+    {
+        $this->attributes['nominal']   = $value;
+        $this->attributes['terbilang'] = $this->terbilang($value);
+    }
+
     public function setPedagangIdAttribute($value)
     {
         $this->attributes['pedagang_id'] = $value;
-        $this->attributes['terbilang'] = $this->terbilang($this->nominal);
 
         $index      = 1;
         $latestItem = Kwitansi::query()->latest()->first();

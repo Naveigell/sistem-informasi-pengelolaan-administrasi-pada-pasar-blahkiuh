@@ -33,6 +33,11 @@ class Pembayaran extends Model
         return $this->belongsTo('App\Models\Kategori');
     }
 
+    public function kwitansi()
+    {
+        return $this->hasOne(Kwitansi::class);
+    }
+
     public static function getDefaultValues()
     {
         return (object) [

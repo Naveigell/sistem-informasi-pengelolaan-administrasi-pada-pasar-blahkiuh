@@ -69,10 +69,24 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.pembayaran.index') ? 'active' : '' }}" href="{{ route('admin.pembayaran.index') }}" aria-expanded="false">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark {{ request()->routeIs('admin.pembayaran.index') ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                                 <i class="fa fa-hand-holding"></i>
                                 <span class="hide-menu">Pembayaran</span>
                             </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item">
+                                    <a href="{{ route('admin.pembayaran.index', ["type" => "tunai"]) }}" class="sidebar-link">
+                                        <i class="mdi mdi-cards-variant"></i>
+                                        <span class="hide-menu">Tunai</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="{{ route('admin.pembayaran.index', ["type" => "non-tunai"]) }}" class="sidebar-link">
+                                        <i class="mdi mdi-cards-variant"></i>
+                                        <span class="hide-menu">Non Tunai</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">

@@ -22,13 +22,20 @@ class PembayaranController extends Controller
      */
     public function index()
     {
+
         if (auth()->guard('web')->check()) {
-            $data['pembayaran'] = Pembayaran::orderBy('tgl', 'desc')->get();
+            $pembayaran = Pembayaran::with('kwitansi')->orderBy('tgl', 'desc');
         } else {
-            $data['pembayaran'] = Pembayaran::where('pedagang_id', auth()->user()->id)->orderBy('tgl', 'desc')->get();
+            $pembayaran = Pembayaran::with('kwitansi')->where('pedagang_id', auth()->user()->id)->orderBy('tgl', 'desc');
         }
 
-        return view('admin.pages.pembayaran.index', $data);
+        if (\request()->query('type') === 'non-tunai') {
+            $pembayaran = $pembayaran->whereNotNull('bukti_pembayaran')->get();
+        } else {
+            $pembayaran = $pembayaran->whereNull('bukti_pembayaran')->get();
+        }
+
+        return view('admin.pages.pembayaran.index', compact('pembayaran'));
     }
 
     /**
@@ -60,7 +67,6 @@ class PembayaranController extends Controller
                 'nominal' => 'required',
                 'kategori_id' => 'required',
                 'pedagang_id' => 'required',
-                'bukti_pembayaran' => 'required',
                 'status' => 'required'
             ]);
 
@@ -71,7 +77,6 @@ class PembayaranController extends Controller
                 'tgl' => 'required',
                 'nominal' => 'required',
                 'kategori_id' => 'required',
-                'bukti_pembayaran' => 'required',
             ]);
             $input = $request->toArray();
             $input['pedagang_id'] = auth()->user()->id;
@@ -79,12 +84,16 @@ class PembayaranController extends Controller
             $redirect = 'admin.pembayaran.index';
         }
 
-        $path = $request->file('bukti_pembayaran')->store('public/bukti_pembayaran');
-        $input['bukti_pembayaran'] = $path;
+        if ($request->hasFile('bukti_pembayaran')) {
 
-        Pembayaran::create($input);
+            $path = $request->file('bukti_pembayaran')->store('public/bukti_pembayaran');
+            $input['bukti_pembayaran'] = $path;
 
-        return redirect(route($redirect))->with('success', 'Berhasil menambah data pembayaran');
+        }
+
+        $pembayaran = Pembayaran::create($input);
+
+        return redirect(route($redirect, ["type" => $pembayaran->bukti_pembayaran ? "non-tunai" : "tunai"]))->with('success', 'Berhasil menambah data pembayaran');
     }
 
     /**
@@ -142,10 +151,11 @@ class PembayaranController extends Controller
             }
 
             Kwitansi::query()->create([
+                "pembayaran_id" => $pembayaran->id,
                 "pedagang_id" => $pembayaran->pedagang_id,
                 "tgl" => $pembayaran->tgl,
                 "nominal" => $pembayaran->nominal,
-                "keterangan" => $pembayaran->keterangan,
+                "keterangan" => $pembayaran->kategori->nama_kategori,
             ]);
 
         } else if ($request->status == 2) {
