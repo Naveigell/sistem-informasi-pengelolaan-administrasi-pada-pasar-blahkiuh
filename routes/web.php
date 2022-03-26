@@ -24,6 +24,15 @@ Auth::routes(['register' => false]);
 
 Route::get('/', [PedagangLoginController::class, 'showLoginForm'])->name('pedagang.loginform');
 Route::post('/pedagang/login', [PedagangLoginController::class, 'login'])->name('pedagang.login');
+
+Route::name('pedagang.')->prefix('pedagang')->group(function () {
+
+    Route::get('forget-password', [\App\Http\Controllers\Pedagang\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+    Route::post('forget-password', [\App\Http\Controllers\Pedagang\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+    Route::get('reset-password/{token}', [\App\Http\Controllers\Pedagang\ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+    Route::post('reset-password', [\App\Http\Controllers\Pedagang\ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+});
+
 Route::middleware(['auth:pedagang'])->prefix('pedagang')
                                     ->name('pedagang.')
                                     ->group(function() {
