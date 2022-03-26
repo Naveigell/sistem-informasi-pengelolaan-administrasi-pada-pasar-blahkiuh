@@ -37,7 +37,7 @@
                 <div style="margin-bottom:10px">
                     <img src="{{ public_path('img/logo.png') }}" alt="logo" width="80">
                 </div>
-                <h2>{{ env("APP_NAME") }}</h2>
+                <h2>Pasar Tradisional Blahkiuh</h2>
                 <p>Alamat: Jl. Ciung Wanara Blahkiuh, Abinsemal, Badung</p>
                 <p>Tlp : 088219162457</p>
             </div>

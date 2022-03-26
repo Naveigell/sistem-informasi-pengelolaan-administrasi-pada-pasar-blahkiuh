@@ -46,10 +46,12 @@ class Pedagang extends Authenticatable
 
     public function setTempatIdAttribute($value)
     {
-        $max = Pedagang::query()->where('tempat_id', $value)->max('position');
+        if (request()->isMethod('post')) {
+            $max = Pedagang::query()->where('tempat_id', $value)->max('position');
+            $this->attributes['position']  = $max ? $max + 1 : 1;
+        }
 
         $this->attributes['tempat_id'] = $value;
-        $this->attributes['position']  = $max ? $max + 1 : 1;
     }
 
     public function setPasswordAttribute($password)

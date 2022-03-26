@@ -60,7 +60,7 @@
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Tanggal') }}</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control datepicker @error('tgl') is-invalid @enderror" name="tgl" value="{{ old('tgl', $pembayaran->tgl) }}">
+                                <input type="text" readonly class="form-control @error('tgl') is-invalid @enderror" name="tgl" value="{{ date('Y-m-d') }}">
 
                                 @error('tgl')
                                     <span class="invalid-feedback" role="alert">
@@ -74,7 +74,7 @@
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Nominal') }}</label>
 
                             <div class="col-md-6">
-                                <input type="number" class="form-control @error('nominal') is-invalid @enderror" name="nominal" value="{{ old('nominal', $pembayaran->nominal) }}">
+                                <input type="text" class="nominal form-control @error('nominal') is-invalid @enderror" name="nominal" value="{{ old('nominal', $pembayaran->nominal) }}">
 
                                 @error('nominal')
                                     <span class="invalid-feedback" role="alert">
@@ -136,7 +136,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-4">
-                                <input type="submit" value="Simpan" class="btn btn-primary">
+                                <input type="submit" onclick="return confirm('Apakah data ini sudah benar?');" value="Simpan" class="btn btn-primary">
                             </div>
                         </div>
                     </form>

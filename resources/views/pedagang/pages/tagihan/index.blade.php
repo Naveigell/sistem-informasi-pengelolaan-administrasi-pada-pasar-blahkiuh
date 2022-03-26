@@ -12,6 +12,7 @@
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>No Tagihan</th>
                                 <th>Jenis Tagihan</th>
                                 <th>Pedagang</th>
                                 <th>Nominal</th>
@@ -22,6 +23,7 @@
                             @foreach($tagihans as $tagihan)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $tagihan->no_tagihan }}</td>
                                     <td>{{ $tagihan->tempatKategori->nama_kategori }}</td>
                                     <td>{{ $tagihan->pedagang->nama }}</td>
                                     <td>Rp. {{ number_format($tagihan->nominal, 0, ',', '.') }}</td>

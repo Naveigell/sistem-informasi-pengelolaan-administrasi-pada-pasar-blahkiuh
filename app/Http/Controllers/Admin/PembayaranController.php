@@ -144,7 +144,6 @@ class PembayaranController extends Controller
                     "kategori_id" => $pembayaran->kategori_id,
                     "nominal" => $pembayaran->nominal,
                     "tgl" => $pembayaran->tgl,
-                    "keterangan" => $pembayaran->keterangan,
                     "user_id" => auth('web')->id(),
                 ]);
 

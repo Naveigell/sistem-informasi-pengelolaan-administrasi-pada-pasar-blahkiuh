@@ -3,7 +3,7 @@
 @section('content')
 <div class="">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Laporan Pemasukan') }}</div>
 
@@ -11,8 +11,8 @@
                     <div class="mb-4">
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="" method="get">
-                                    <div class="form-group">
+                                <form action="" method="get" class="row">
+                                    <div class="form-group col-6">
                                         <label for="">Jenis Pemasukan</label>
                                         <select name="kategori" id="" class="form-select select2">
                                             <option value="">Pilih</option>
@@ -21,7 +21,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-6">
                                         <label>Jenis Cukai</label>
                                         <select name="jenis_cukai" class="form-select select2" id="jenis_cukai">
                                             <option value="">Pilih</option>
@@ -30,11 +30,11 @@
                                             <option value="tahunan" {{ request('jenis_cukai') == 'tahunan' ? 'selected' : ''  }}>Tahunan</option>
                                         </select>
                                     </div>
-                                    <div class="form-group mt-3 {{ request('jenis_cukai') == 'harian' ? '' : 'd-none' }}" id="field-harian">
+                                    <div class="form-group col-12 mt-3 {{ request('jenis_cukai') == 'harian' ? '' : 'd-none' }}" id="field-harian">
                                         <label>Tanggal</label>
                                         <input type="text" name="tgl" class="form-control datepicker" id="tgl-tgl" value="{{ request('tgl') }}">
                                     </div>
-                                    <div class="row  {{ request('jenis_cukai') == 'bulanan' ? '' : 'd-none' }}" id="field-bulanan">
+                                    <div class="row col-12 {{ request('jenis_cukai') == 'bulanan' ? '' : 'd-none' }}" id="field-bulanan">
                                         <div class="col-6">
                                             <div class="form-group mt-3">
                                                 <label>Bulan</label>
@@ -52,11 +52,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group mt-3 {{ request('jenis_cukai') == 'tahunan' ? '' : 'd-none' }}" id="field-tahunan">
+                                    <div class="form-group col-12 mt-3 {{ request('jenis_cukai') == 'tahunan' ? '' : 'd-none' }}" id="field-tahunan">
                                         <label>Tahun</label>
                                         <input type="number" name="tahun" class="form-control" id="tahun-tahun" value="{{ request('tahun', date('Y')) }}">
                                     </div>
-                                    <div class="form-group mt-3">
+                                    <div class="form-group col-12 mt-3">
                                         <input type="submit" value="Cari" class="btn btn-primary">
                                     </div>
                                 </form>

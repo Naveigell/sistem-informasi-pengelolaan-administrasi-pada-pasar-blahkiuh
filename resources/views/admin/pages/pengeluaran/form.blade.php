@@ -48,7 +48,7 @@
                             <label class="col-md-4 col-form-label text-md-end">Jumlah</label>
 
                             <div class="col-md-6">
-                                <input type="number" id="jumlah" min="1" class="form-control @error('jumlah') is-invalid @enderror" name="jumlah" value="">
+                                <input type="text" id="jumlah" min="1" class="nominal form-control @error('jumlah') is-invalid @enderror" name="jumlah" value="">
                             </div>
                         </div>
 
@@ -56,7 +56,7 @@
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Nominal') }}</label>
 
                             <div class="col-md-6">
-                                <input type="number" id="nominal" min="1" class="form-control @error('nominal') is-invalid @enderror" name="nominal" value="">
+                                <input type="text" id="nominal" min="1" class="nominal form-control @error('nominal') is-invalid @enderror" name="nominal" value="">
                             </div>
                         </div>
 
@@ -79,6 +79,7 @@
                                         <th>Nama Pengeluaran</th>
                                         <th>Jumlah</th>
                                         <th>Nominal</th>
+                                        <th>Total</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -98,6 +99,9 @@
                                                 </td>
                                                 <td>
                                                     <input type="number" name="nominal[]" class="form-control" readonly value="{{ session()->getOldInput('nominal')[$loop->index] }}">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" readonly value="{{ session()->getOldInput('nominal')[$loop->index] * session()->getOldInput('jumlah')[$loop->index] }}">
                                                 </td>
                                                 <td>
                                                     <button type="button" data-row-id="row-{{ $bytes }}" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-trash"></i></button>
@@ -124,8 +128,10 @@
         function addPengeluaran() {
             let id = (Math.random() + 1).toString(36) + Date.now();
             let namaPengeluaran = $('#nama-pengeluaran').val();
-            let jumlah          = $('#jumlah').val();
-            let nominal         = $('#nominal').val();
+            let jumlah          = $('#jumlah').val().replace(',', '');
+            let nominal         = $('#nominal').val().replace(',', '');
+
+            let total = jumlah * nominal;
 
             $('#pengeluaran-container').append(`
                                    <tr id="row-${id}">
@@ -137,6 +143,9 @@
                                         </td>
                                         <td>
                                             <input type="number" name="nominal[]" class="form-control" readonly value="${nominal}">
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" readonly value="${total}">
                                         </td>
                                         <td>
                                             <button type="button" data-row-id="row-${id}" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-trash"></i></button>

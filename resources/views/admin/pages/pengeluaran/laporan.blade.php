@@ -3,7 +3,7 @@
 @section('content')
 <div class="">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Laporan Pengeluaran') }}</div>
 
@@ -83,7 +83,6 @@
                                 <th>#</th>
                                 <th>Tgl</th>
                                 <th>Nama Pengeluaran</th>
-                                <th>Keterangan</th>
                                 <th>Nominal</th>
                             </tr>
                         </thead>
@@ -95,12 +94,10 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->tgl }}</td>
                                     <td>{{ $row->nama_pengeluaran }}</td>
-                                    <td>{{ $row->keterangan }}</td>
                                     <td>Rp. {{ number_format($row->nominal) }}</td>
                                 </tr>
                             @endforeach
                             <tr>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <th>Total</th>

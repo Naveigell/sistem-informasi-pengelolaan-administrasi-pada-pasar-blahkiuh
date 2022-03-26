@@ -69,7 +69,6 @@
                                                         @csrf
                                                         @method('PUT')
                                                         <input type="hidden" name="status" value="1">
-                                                        <input type="hidden" name="keterangan" value="sudah lunas">
                                                         <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Apakah anda yakin untuk meng-acc pembayaran?')"><i class="fa fa-check"></i></button>
                                                     </form>
                                                     <form action="{{ route('admin.pembayaran.update', $row->id) }}" method="post" id="decline-{{ $row->id }}">

@@ -57,11 +57,15 @@ class PengeluaranController extends Controller
 
         $latestId = Pengeluaran::query()->max('id');
         $latestId = $latestId ? $latestId + 1 : 1;
+        $index    = 0;
 
         $groupPengeluaran = new GroupPengeluaran([
             "no_invoice" => "INVP-{$latestId}-" . date('Y-m-d'),
             "tgl"        => now()->toDateString(),
-            "sub_total"  => array_sum($input['nominal']),
+            "sub_total"  => array_reduce($input['nominal'], function ($output, $item) use(&$index, $input) {
+
+                return $output + ($item * $input['jumlah'][$index++]);
+            }, 0),
         ]);
         $groupPengeluaran->save();
 

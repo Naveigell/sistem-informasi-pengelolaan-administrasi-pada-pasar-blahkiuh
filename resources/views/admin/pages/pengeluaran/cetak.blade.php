@@ -43,7 +43,7 @@
             </div>
             <hr>
             <h3>Laporan Pengeluaran</h3>
-            <p>{{ bulan()[request('bulan')] . ' ' . request('tahun') }}</p>
+            <p>{{ (request('bulan') ? bulan()[request('bulan')] : '') . ' ' . request('tahun') }}</p>
         </div>
         <table class="table">
             <thead>
@@ -73,6 +73,13 @@
                 </tr>
             </tbody>
         </table>
+
+        <div style="float: right; margin-right: 70px; margin-top: 70px;">
+            <div style="text-align: center;">
+                <div>Blahkiuh, {{ date('d-m-Y') }}</div>
+                <div style="margin-top: 90px;">Kepala Pasar</div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
