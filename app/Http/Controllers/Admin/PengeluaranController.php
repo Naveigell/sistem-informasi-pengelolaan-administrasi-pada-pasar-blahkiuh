@@ -29,6 +29,7 @@ class PengeluaranController extends Controller
     public function create()
     {
         $data['pengeluaran'] = Pengeluaran::getDefaultValues();
+        $data['latestId']    = Pengeluaran::query()->max('id');
 
         return view('admin.pages.pengeluaran.form', $data);
     }

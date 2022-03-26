@@ -21,7 +21,7 @@ class Pengeluaran extends Model
         'tgl',
         'keterangan',
         'bukti_pengeluaran',
-        'user_id'
+        'user_id',
     ];
 
     public static function getDefaultValues()
@@ -32,7 +32,8 @@ class Pengeluaran extends Model
             'tgl' => '',
             'keterangan' => '',
             'bukti_pengeluaran' => '',
-            'user_id' => ''
+            'user_id' => '',
+            'jumlah' => '',
         ];
     }
 
