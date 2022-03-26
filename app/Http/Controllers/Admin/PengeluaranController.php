@@ -17,7 +17,7 @@ class PengeluaranController extends Controller
      */
     public function index()
     {
-        $data['pengeluaran'] = Pengeluaran::orderBy('tgl', 'desc')->get();
+        $data['pengeluaran'] = GroupPengeluaran::query()->orderBy('tgl', 'desc')->get();
 
         return view('admin.pages.pengeluaran.index', $data);
     }
@@ -88,12 +88,14 @@ class PengeluaranController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param GroupPengeluaran $pengeluaran
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(GroupPengeluaran $pengeluaran)
     {
-        //
+        $pengeluaran->load('pengeluaran.user');
+
+        return view('admin.pages.pengeluaran.show', compact('pengeluaran'));
     }
 
     /**

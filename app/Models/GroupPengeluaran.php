@@ -12,4 +12,9 @@ class GroupPengeluaran extends Model
     protected $fillable = [
         'no_invoice', 'tgl', 'sub_total',
     ];
+
+    public function pengeluaran()
+    {
+        return $this->hasMany(Pengeluaran::class);
+    }
 }
