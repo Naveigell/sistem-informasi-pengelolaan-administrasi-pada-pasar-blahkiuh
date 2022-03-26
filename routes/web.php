@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\PedagangLoginController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +39,16 @@ Route::middleware(['auth:pedagang'])->prefix('pedagang')
     Route::resource('biodata', \App\Http\Controllers\Pedagang\BiodataController::class);
 });
 
-Route::middleware(['auth'])->group(function() {
-    Route::prefix('admin')->name('admin.')->group(function () {
+
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    Route::get('forget-password', [\App\Http\Controllers\Admin\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+    Route::post('forget-password', [\App\Http\Controllers\Admin\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+    Route::get('reset-password/{token}', [\App\Http\Controllers\Admin\ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+    Route::post('reset-password', [\App\Http\Controllers\Admin\ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
+    Route::middleware(['auth'])->group(function() {
+
         Route::get('/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('dashboard');
 
         Route::prefix('tempats/{tempat}')->name('tempats.')->group(function () {
