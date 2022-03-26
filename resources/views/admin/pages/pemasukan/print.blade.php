@@ -13,11 +13,11 @@
         .text-center {
             text-align: center;
         }
-        table {
+        .table {
             width: 100%;
             border-collapse: collapse;
         }
-        table tr td, table th {
+        .table tr td, .table th {
             padding:5px;
             border: 1px solid black;
         }
@@ -82,12 +82,19 @@
         @endforeach
 
         <tr>
-            <td colspan="5">Total</td>
+            <td style="font-weight: bold;" colspan="5">Total</td>
             <td style="font-weight: bold;">Rp. {{ number_format($fullTotal) }}</td>
         </tr>
         </tbody>
 
     </table>
+
+    <div style="float: right; margin-right: 70px; margin-top: 70px;">
+        <div style="text-align: center;">
+            <div>Blahkiuh, {{ date('d-m-Y') }}</div>
+            <div style="margin-top: 90px;">Kepala Pasar</div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
