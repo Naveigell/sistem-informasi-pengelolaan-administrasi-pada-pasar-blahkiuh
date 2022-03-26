@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class GroupPengeluaran extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'no_invoice', 'tgl', 'sub_total',
+    ];
 }

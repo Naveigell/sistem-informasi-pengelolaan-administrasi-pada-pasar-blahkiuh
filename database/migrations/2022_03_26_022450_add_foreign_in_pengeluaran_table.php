@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::table('pengeluaran', function (Blueprint $table) {
             $table->foreignId('group_pengeluaran_id')->nullable()->after('id')->constrained('group_pengeluarans')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('bukti_pengeluaran')->nullable()->change();
+            $table->unsignedInteger('jumlah')->after('keterangan');
         });
     }
 
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->dropForeign(['group_pengeluaran_id']);
             $table->dropColumn('group_pengeluaran_id');
             $table->string('bukti_pengeluaran')->nullable(false)->change();
+            $table->dropColumn('jumlah');
         });
     }
 };

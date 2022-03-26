@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\GroupPengeluaran;
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -43,17 +44,43 @@ class PengeluaranController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_pengeluaran' => 'required',
-            'tgl' => 'required',
-            'nominal' => 'required',
-            'bukti_pengeluaran' => 'required|image|mimes:jpg,jpeg,png',
+            'tgl' => 'required|date',
+            'nama_pengeluaran' => 'required|array',
+            'nama_pengeluaran.*' => 'required|string|min:3|max:255',
+            'jumlah' => 'required|array',
+            'jumlah.*' => 'required|integer|min:1',
+            'nominal' => 'required|array',
+            'nominal.*' => 'required|integer|min:1',
         ]);
-        $path = $request->file('bukti_pengeluaran')->store('public/bukti_pengeluaran');
-        $input = $request->toArray();
-        $input['user_id'] = auth()->user()->id;
-        $input['bukti_pengeluaran'] = $path;
 
-        Pengeluaran::create($input);
+        $input = $request->toArray();
+
+        $latestId = Pengeluaran::query()->max('id');
+        $latestId = $latestId ? $latestId + 1 : 1;
+
+        $groupPengeluaran = new GroupPengeluaran([
+            "no_invoice" => "INVP-{$latestId}-" . date('Y-m-d'),
+            "tgl"        => now()->toDateString(),
+            "sub_total"  => array_sum($input['nominal']),
+        ]);
+        $groupPengeluaran->save();
+
+        $pengeluarans = [];
+
+        foreach ($input['nama_pengeluaran'] as $index => $nama_pengeluaran) {
+            $pengeluarans[] = [
+                "nama_pengeluaran"     => $nama_pengeluaran,
+                "nominal"              => $input['nominal'][$index],
+                "tgl"                  => now()->toDateString(),
+                "jumlah"               => $input['jumlah'][$index],
+                "created_at"           => now()->toDateTimeString(),
+                "updated_at"           => now()->toDateTimeString(),
+                "group_pengeluaran_id" => $groupPengeluaran->id,
+                "user_id"              => auth()->user()->id,
+            ];
+        }
+
+        Pengeluaran::query()->insert($pengeluarans);
 
         return redirect()->route('admin.pengeluaran.index')->with('success', 'Berhasil menambah data pengeluaran');
     }

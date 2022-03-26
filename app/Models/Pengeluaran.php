@@ -16,6 +16,7 @@ class Pengeluaran extends Model
     protected $table = 'pengeluaran';
 
     protected $fillable = [
+        'group_pengeluaran_id',
         'nama_pengeluaran',
         'nominal',
         'tgl',
