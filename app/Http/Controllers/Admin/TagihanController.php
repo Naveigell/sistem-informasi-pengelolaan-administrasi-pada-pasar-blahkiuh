@@ -7,6 +7,9 @@ use App\Http\Requests\Admin\TagihanRequest;
 use App\Models\JenisTagihan;
 use App\Models\Pedagang;
 use App\Models\Tagihan;
+use App\Models\TagihanTempatKategori;
+use App\Models\TempatKategori;
+use Database\Seeders\TempatKategoriSeeder;
 use Illuminate\Http\Request;
 
 class TagihanController extends Controller
@@ -38,13 +41,42 @@ class TagihanController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param TagihanRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(TagihanRequest $request)
+    public function store(Request $request)
     {
-        $tagihan = new Tagihan($request->validated());
+        $pedagang = Pedagang::with('tempat.tempatKategori')->where('id', $request->get('pedagang_id'))->first();
+        $ids      = $pedagang->tempat->tempatKategori->pluck('id');
+
+        $filteredIds = [];
+
+        foreach ($ids as $id) {
+
+            if ($request->get('tempat_kategori_ids-' . $id)) {
+                $filteredIds[] = $id;
+            }
+        }
+
+        $nominal = TempatKategori::query()->whereIn('id', $filteredIds)->sum('nominal');
+        $tagihan = new Tagihan([
+            "pedagang_id" => $request->get('pedagang_id'),
+            "nominal"     => $nominal,
+        ]);
         $tagihan->save();
+
+        $tagihanTempatKategori = [];
+
+        foreach ($filteredIds as $filteredId) {
+            $tagihanTempatKategori[] = [
+                "tagihan_id"         => $tagihan->id,
+                "tempat_kategori_id" => $filteredId,
+                "created_at"         => now()->toDateTimeString(),
+                "updated_at"         => now()->toDateTimeString(),
+            ];
+        }
+
+        TagihanTempatKategori::query()->insert($tagihanTempatKategori);
 
         return redirect()->route('admin.tagihans.index')->with('success', 'Berhasil menambah data tagihan');
     }

@@ -47,30 +47,24 @@
                                     <label class="col-md-4 col-form-label text-md-end">Jenis Tagihan</label>
 
                                     <div class="col-md-6">
-                                        <select class="form-select select2">
-                                            <option value="">- Pilih Jenis Tagihan -</option>
-                                            @foreach($pedagang->tempat->tempatKategori as $option)
-                                                <option data-nominal="{{ $option->nominal }}" data-nominal-display="Rp. {{ $option->nominal_formatted }}" value="{{ $option->id }}" {{ $option->id == old('tempat_kategori_id', (@$tagihan) ? (($tagihan->pedagang_id === $pedagang->id) ? $tagihan->tempat_kategori_id : '') : '') ? 'selected' : '' }}>{{ $option->nama_kategori }}</option>
-                                            @endforeach
-                                        </select>
-
-                                        @error('jenis_tagihan_id')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        @foreach($pedagang->tempat->tempatKategori as $option)
+                                            @php
+                                                $randomId = uniqid();
+                                            @endphp
+                                            <div class="form-check form-check-inline form-group">
+                                                <input data-nominal="{{ $option->nominal }}" class="form-check-input" name="tempat_kategori_ids-{{ $option->id }}" type="checkbox" id="{{ $randomId }}">
+                                                <label class="form-check-label" for="{{ $randomId }}">{{ $option->nama_kategori }}</label>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             @endforeach
-
-                            <input type="text" readonly name="tempat_kategori_id" id="tempat_kategori_id" hidden>
-                            <input type="text" readonly name="nominal" id="nominal" hidden>
 
                             <div class="row mb-3">
                                 <label class="col-md-4 col-form-label text-md-end">Nominal</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" id="nominal-display" readonly class="form-control @error('nominal') is-invalid @enderror" value="Rp. {{ number_format((int) old('nominal', @$tagihan ? $tagihan->nominal : ''), 0, ',', '.') }}">
+                                    <input type="text" id="nominal-display-1" readonly class="form-control nominal @error('nominal') is-invalid @enderror" value="{{ number_format((int) old('nominal', @$tagihan ? $tagihan->nominal : ''), 0, ',', '.') }}">
 
                                     @error('nominal')
                                         <span class="invalid-feedback" role="alert">
@@ -105,11 +99,24 @@
                 $('#nama-tempat').val('');
             }
 
-            $('#nominal-display').val('');
+            $('input[type=checkbox]').prop('checked',false);
+
+            $('#nominal-display-1').val('');
 
             $('.tagihans').hide();
 
             $(`#${id}`).show();
+        });
+
+        $('input:checkbox').change(function(){
+
+            let nominal = Array.from(
+                document.querySelectorAll('input[type=checkbox]:checked')
+            ).reduce(function (total, item) {
+                return total + parseInt(item.getAttribute('data-nominal'));
+            }, 0);
+
+            $('#nominal-display-1').val(nominal);
         });
 
         $('.tagihans').on('change', function () {
