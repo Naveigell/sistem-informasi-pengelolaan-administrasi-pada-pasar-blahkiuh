@@ -19,11 +19,7 @@ class PembayaranController extends Controller
      */
     public function index()
     {
-        if (auth()->guard('web')->check()) {
-            $data['pembayaran'] = Pembayaran::orderBy('tgl', 'desc')->get();
-        } else {
-            $data['pembayaran'] = Pembayaran::where('pedagang_id', auth()->user()->id)->orderBy('tgl', 'desc')->get();
-        }
+        $data['pembayaran'] = Pembayaran::with('tagihan')->where('pedagang_id', auth()->user()->id)->orderBy('tgl', 'desc')->get();
 
         return view('pedagang.pages.pembayaran.index', $data);
     }
@@ -38,7 +34,7 @@ class PembayaranController extends Controller
         $data['pembayaran'] = Pembayaran::getDefaultValues();
         $data['pedagang'] = Pedagang::orderBy('nama', 'asc')->get();
         $data['kategori'] = Kategori::orderBy('nama_kategori', 'asc')->get();
-        $data['tagihans'] = Tagihan::with('tempatKategori')->get();
+        $data['tagihans'] = Tagihan::isNotLunas()->with('pedagang', 'tempatKategori')->where('pedagang_id', auth()->id())->get();
 
         return view('pedagang.pages.pembayaran.form', $data);
     }
@@ -51,41 +47,23 @@ class PembayaranController extends Controller
      */
     public function store(Request $request)
     {
-        $input = [];
-
-        if (auth()->guard('web')->check()) {
-            $request->validate([
-                'tgl' => 'required',
-                'nominal' => 'required',
-                'kategori_id' => 'required',
-                'pedagang_id' => 'required',
-                'bukti_pembayaran' => 'required',
-                'status' => 'required',
-                'keterangan' => 'required',
-            ]);
-
-            $input = $request->toArray();
-            $redirect = 'pedagang.pembayaran.index';
-        } else {
-            $request->validate([
-                'tgl' => 'required',
-                'nominal' => 'required',
-                'kategori_id' => 'required',
-                'bukti_pembayaran' => 'required',
-                'keterangan' => 'required',
-            ]);
-            $input = $request->toArray();
-            $input['pedagang_id'] = auth()->user()->id;
-            $input['status'] = 0;
-            $redirect = 'pedagang.pembayaran.index';
-        }
+        $request->validate([
+            'tgl' => 'required',
+            'nominal' => 'required',
+            'kategori_id' => 'required',
+            'bukti_pembayaran' => 'required',
+            'keterangan' => 'required',
+        ]);
+        $input = $request->toArray();
+        $input['pedagang_id'] = auth()->user()->id;
+        $input['status'] = 0;
 
         $path = $request->file('bukti_pembayaran')->store('public/bukti_pembayaran');
         $input['bukti_pembayaran'] = $path;
 
         Pembayaran::create($input);
 
-        return redirect()->route($redirect)->with('success', 'Berhasil menambah data pembayaran');
+        return redirect()->route('pedagang.pembayaran.index')->with('success', 'Berhasil menambah data pembayaran');
     }
 
     /**

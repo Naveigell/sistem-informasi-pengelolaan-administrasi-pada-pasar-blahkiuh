@@ -94,7 +94,7 @@
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Nominal') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nominal" type="number" class="form-control @error('nominal') is-invalid @enderror" name="nominal" value="{{ old('nominal', $pembayaran->nominal) }}">
+                                <input id="nominal" type="number" class="nominal form-control @error('nominal') is-invalid @enderror" name="nominal" value="{{ old('nominal', $pembayaran->nominal) }}">
 
                                 @error('nominal')
                                     <span class="invalid-feedback" role="alert">
