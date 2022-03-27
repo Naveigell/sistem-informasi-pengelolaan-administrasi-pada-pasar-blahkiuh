@@ -26,6 +26,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>No Tagihan</th>
                                 <th>Kategori pembayaran</th>
                                 <th>Pedagang</th>
                                 <th>Tgl</th>
@@ -48,6 +49,7 @@
                             @foreach ($pembayaran as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $row->tagihan?->no_tagihan ?? '-' }}</td>
                                     <td>{{ $row->kategori?->nama_kategori ?? 'Tidak Ada' }}</td>
                                     <td>{{ $row->pedagang?->nama ?? 'Tidak Ada'}}</td>
                                     <td>{{ $row->tgl }}</td>

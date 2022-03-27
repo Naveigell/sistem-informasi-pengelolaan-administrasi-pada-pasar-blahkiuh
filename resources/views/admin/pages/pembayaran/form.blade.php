@@ -3,7 +3,7 @@
 @section('content')
 <div class="">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Form Pembayaran') }}</div>
 
@@ -13,6 +13,26 @@
                         @isset($pembayaran->id)
                             {{ method_field('PUT')}}
                         @endisset
+
+                        <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end">Nomor Tagihan</label>
+
+                            <div class="col-md-6">
+
+                                <select class="form-select select2" name="tagihan_id" id="tagihan-id">
+                                    <option value="">Tidak ada</option>
+                                    @foreach($tagihans as $option)
+                                        <option data-pedagang-id="{{ $option->pedagang->id }}" data-keterangan="{{ $option->tempatKategori->nama_kategori }}" data-nominal="{{ $option->nominal }}" value="{{ $option->id }}" {{ $option->id == old('kategori_id', $pembayaran->kategori_id) ? 'selected' : '' }}>[{{ $option->no_tagihan }}] {{ $option->pedagang->nama }}  ({{ $option->pedagang->tempat->nama_tempat }} - {{ $option->pedagang->position }})</option>
+                                    @endforeach
+                                </select>
+
+                                @error('kategori_id')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="row mb-3">
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Kategori pembayaran') }}</label>
@@ -34,28 +54,6 @@
                             </div>
                         </div>
 
-                        @if (auth()->guard('web')->check())
-                            <div class="row mb-3">
-                                <label class="col-md-4 col-form-label text-md-end">{{ __('Pedagang') }}</label>
-
-                                <div class="col-md-6">
-
-                                    <select class="form-select select2" name="pedagang_id">
-                                        <option value="">Tidak ada</option>
-                                        @foreach($pedagang as $option)
-                                            <option value="{{ $option->id }}" {{ $option->id == old('pedagang_id', $pembayaran->pedagang_id) ? 'selected' : '' }}>{{ $option->nama }} ({{ $option->tempat->nama_tempat }} - {{ $option->position }})</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('pedagang_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                        @endif
-
                         <div class="row mb-3">
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Tanggal') }}</label>
 
@@ -74,7 +72,7 @@
                             <label class="col-md-4 col-form-label text-md-end">{{ __('Nominal') }}</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="nominal form-control @error('nominal') is-invalid @enderror" name="nominal" value="{{ old('nominal', $pembayaran->nominal) }}">
+                                <input type="text" id="nominal" class="nominal form-control @error('nominal') is-invalid @enderror" name="nominal" value="{{ old('nominal', $pembayaran->nominal) }}">
 
                                 @error('nominal')
                                     <span class="invalid-feedback" role="alert">
@@ -102,7 +100,7 @@
                             <label class="col-md-4 col-form-label text-md-end">Keterangan</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control @error('keterangan') is-invalid @enderror" name="keterangan">{{ old('keterangan', $pembayaran->keterangan) }}</textarea>
+                                <textarea id="keterangan" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan">{{ old('keterangan', $pembayaran->keterangan) }}</textarea>
 
                                 @error('keterangan')
                                     <span class="invalid-feedback" role="alert">
@@ -134,6 +132,8 @@
                         </div>
                         @endif
 
+                        <input type="hidden" name="pedagang_id" id="pedagang-id">
+
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-4">
                                 <input type="submit" onclick="return confirm('Apakah data ini sudah benar?');" value="Simpan" class="btn btn-primary">
@@ -146,3 +146,13 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $('#tagihan-id').change(function () {
+            $('#nominal').val($(this).find(':selected').data('nominal'));
+            $('#keterangan').val($(this).find(':selected').data('keterangan'));
+            $('#pedagang-id').val($(this).find(':selected').data('pedagang-id'));
+        })
+    </script>
+@endpush

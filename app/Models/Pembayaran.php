@@ -33,6 +33,11 @@ class Pembayaran extends Model
         return $this->belongsTo('App\Models\Kategori');
     }
 
+    public function tagihan()
+    {
+        return $this->belongsTo(Tagihan::class);
+    }
+
     public function kwitansi()
     {
         return $this->hasOne(Kwitansi::class);

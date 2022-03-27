@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method Builder|static isLunas()
+ * @method Builder|static isNotLunas()
+ */
 class Tagihan extends Model
 {
     use HasFactory;
@@ -25,6 +30,22 @@ class Tagihan extends Model
         }
 
         $this->attributes['no_tagihan'] = 'TG-' . str_repeat('0', 4 - strlen((string) $index)) . $index;
+    }
+
+    /**
+     * @param Builder $query
+     */
+    public function scopeIsLunas($query)
+    {
+        $query->where('is_lunas', 1);
+    }
+
+    /**
+     * @param Builder $query
+     */
+    public function scopeIsNotLunas($query)
+    {
+        $query->where('is_lunas', 0);
     }
 
     public function jenisTagihan()

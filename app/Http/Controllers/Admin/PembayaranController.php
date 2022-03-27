@@ -8,6 +8,7 @@ use App\Models\Kwitansi;
 use App\Models\Pedagang;
 use App\Models\Pemasukan;
 use App\Models\Pembayaran;
+use App\Models\Tagihan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -49,6 +50,7 @@ class PembayaranController extends Controller
         $data['pembayaran'] = Pembayaran::getDefaultValues();
         $data['pedagang'] = Pedagang::with('tempat')->orderBy('nama', 'asc')->get();
         $data['kategori'] = Kategori::orderBy('nama_kategori', 'asc')->get();
+        $data['tagihans'] = Tagihan::isNotLunas()->with('jenisTagihan', 'pedagang.tempat')->get();
 
         return view('admin.pages.pembayaran.form', $data);
     }
@@ -61,29 +63,16 @@ class PembayaranController extends Controller
      */
     public function store(Request $request)
     {
-        $input = [];
-        if (auth()->guard('web')->check()) {
-            $request->validate([
-                'tgl' => 'required',
-                'nominal' => 'required',
-                'kategori_id' => 'required',
-                'pedagang_id' => 'required',
-                'status' => 'required'
-            ]);
+        $request->validate([
+            'tgl' => 'required',
+            'nominal' => 'required',
+            'tagihan_id' => 'required',
+            'kategori_id' => 'required',
+            'pedagang_id' => 'required',
+            'status' => 'required'
+        ]);
 
-            $input = $request->toArray();
-            $redirect = 'admin.pembayaran.index';
-        } else {
-            $request->validate([
-                'tgl' => 'required',
-                'nominal' => 'required',
-                'kategori_id' => 'required',
-            ]);
-            $input = $request->toArray();
-            $input['pedagang_id'] = auth()->user()->id;
-            $input['status'] = 0;
-            $redirect = 'admin.pembayaran.index';
-        }
+        $input = $request->toArray();
 
         if ($request->hasFile('bukti_pembayaran')) {
 
@@ -94,35 +83,40 @@ class PembayaranController extends Controller
 
         /** @var Model $pembayaran */
         $pembayaran = Pembayaran::query()->create($input);
-        $pembayaran->load('kategori');
+        $pembayaran->load('kategori', 'tagihan');
 
-        if (($pembayaran->kategori->is_automatic) &&
-            ($pembayaran->status === "Acc")) {
-
-            Pemasukan::query()->create([
-                "pedagang_id" => $pembayaran->pedagang_id,
-                "kategori_id" => $pembayaran->kategori_id,
-                "keterangan" => $pembayaran->keterangan,
-                "nominal" => $pembayaran->nominal,
-                "tgl" => $pembayaran->tgl,
-                "user_id" => auth('web')->id(),
+        if ($pembayaran->status === "Acc") {
+            $pembayaran->tagihan()->update([
+                'is_lunas' => 1,
             ]);
 
-            if ($pembayaran->isTunai()) {
+            if ($pembayaran->kategori->is_automatic) {
 
-                Kwitansi::query()->create([
-                    "pembayaran_id" => $pembayaran->id,
+                Pemasukan::query()->create([
                     "pedagang_id" => $pembayaran->pedagang_id,
-                    "tgl" => $pembayaran->tgl,
+                    "kategori_id" => $pembayaran->kategori_id,
+                    "keterangan" => $pembayaran->keterangan,
                     "nominal" => $pembayaran->nominal,
-                    "keterangan" => $pembayaran->kategori->nama_kategori,
+                    "tgl" => $pembayaran->tgl,
+                    "user_id" => auth('web')->id(),
                 ]);
 
-            }
+                if ($pembayaran->isTunai()) {
 
+                    Kwitansi::query()->create([
+                        "pembayaran_id" => $pembayaran->id,
+                        "pedagang_id" => $pembayaran->pedagang_id,
+                        "tgl" => $pembayaran->tgl,
+                        "nominal" => $pembayaran->nominal,
+                        "keterangan" => $pembayaran->kategori->nama_kategori,
+                    ]);
+
+                }
+
+            }
         }
 
-        return redirect(route($redirect, ["type" => $pembayaran->bukti_pembayaran ? "non-tunai" : "tunai"]))->with('success', 'Berhasil menambah data pembayaran');
+        return redirect(route('admin.pembayaran.index', ["type" => $pembayaran->bukti_pembayaran ? "non-tunai" : "tunai"]))->with('success', 'Berhasil menambah data pembayaran');
     }
 
     /**
@@ -162,6 +156,10 @@ class PembayaranController extends Controller
     {
         $pembayaran = Pembayaran::with('kategori')->findOrFail($id);
         $pembayaran->update($request->toArray());
+
+        $pembayaran->tagihan()->update([
+            'is_lunas' => 1,
+        ]);
 
         if ($request->status == 1) {
             $text = 'acc';
