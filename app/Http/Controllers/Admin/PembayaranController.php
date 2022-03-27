@@ -46,7 +46,7 @@ class PembayaranController extends Controller
     public function create()
     {
         $data['pembayaran'] = Pembayaran::getDefaultValues();
-        $data['pedagang'] = Pedagang::orderBy('nama', 'asc')->get();
+        $data['pedagang'] = Pedagang::with('tempat')->orderBy('nama', 'asc')->get();
         $data['kategori'] = Kategori::orderBy('nama_kategori', 'asc')->get();
 
         return view('admin.pages.pembayaran.form', $data);

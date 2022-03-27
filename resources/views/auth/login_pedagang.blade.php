@@ -71,7 +71,7 @@
                                     <div class="custom-control custom-checkbox d-flex align-items-center">
                                         <input type="checkbox" class="custom-control-input" id="customCheck1">
                                         <label class="custom-control-label" for="customCheck1">Remember me</label>
-                                        <a href="{{ route('pedagang.forget.password.get') }}" id="to-recover" class="text-dark ml-auto"><i class="fa fa-lock mr-1"></i> Lupa Password?</a>
+                                        <a href="{{ route('pedagang.forget.password.get') }}" id="to-recover" class="text-dark ml-auto"><i class="fa fa-lock mr-1"></i> Forgot Password?</a>
                                     </div>
                                 </div>
                             </div>

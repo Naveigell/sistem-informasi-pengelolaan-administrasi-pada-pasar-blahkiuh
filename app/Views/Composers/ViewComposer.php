@@ -11,7 +11,7 @@ class ViewComposer
 {
     public function compose(View $view)
     {
-        $categories = Kategori::all();
+        $categories = Kategori::withoutPedagang()->get();
 
         $view->with('categories', $categories);
     }

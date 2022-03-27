@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @method Builder|static withoutPedagang();
+ * @method Builder|static withPedagang();
  * @property integer is_pedagang
  */
 class Kategori extends Model
@@ -26,6 +29,22 @@ class Kategori extends Model
             'nama_kategori' => '',
             'keterangan' => '',
         ];
+    }
+
+    /**
+     * @param Builder $query
+     */
+    public function scopeWithoutPedagang($query)
+    {
+        $query->where('is_pedagang', 0);
+    }
+
+    /**
+     * @param Builder $query
+     */
+    public function scopeWithPedagang($query)
+    {
+        $query->where('is_pedagang', 1);
     }
 
     public function pemasukan()

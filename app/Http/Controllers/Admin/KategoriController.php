@@ -22,6 +22,18 @@ class KategoriController extends Controller
     }
 
     /**
+     * Display pemasukan with pedagang kategori
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function pedagang()
+    {
+        $kategori = Kategori::withPedagang()->get();
+
+        return view('admin.pages.pemasukan.pedagang', compact('kategori'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View

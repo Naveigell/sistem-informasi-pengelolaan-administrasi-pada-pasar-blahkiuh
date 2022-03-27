@@ -63,6 +63,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::prefix('tempats/{tempat}')->name('tempats.')->group(function () {
             Route::resource('kategori', \App\Http\Controllers\Admin\TempatKategoriController::class);
         });
+
+        Route::get('kategori/pedagang', [\App\Http\Controllers\Admin\KategoriController::class, 'pedagang'])->name('kategori.pedagang');
         Route::prefix('kategori/{kategori}')->name('kategori.')->group(function () {
             Route::resource('pemasukan', \App\Http\Controllers\Admin\PemasukanController::class);
         });

@@ -94,6 +94,12 @@
                                 <span class="hide-menu">Pemasukan</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item">
+                                    <a href="{{ route('admin.kategori.pedagang') }}" class="sidebar-link">
+                                        <i class="mdi mdi-cards-variant"></i>
+                                        <span class="hide-menu">Pemasukan Pedagang</span>
+                                    </a>
+                                </li>
                                 @foreach($categories as $category)
                                     <li class="sidebar-item">
                                         <a href="{{ route('admin.kategori.pemasukan.index', $category) }}" class="sidebar-link">

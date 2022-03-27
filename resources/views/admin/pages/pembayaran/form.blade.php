@@ -43,7 +43,7 @@
                                     <select class="form-select select2" name="pedagang_id">
                                         <option value="">Tidak ada</option>
                                         @foreach($pedagang as $option)
-                                            <option value="{{ $option->id }}" {{ $option->id == old('pedagang_id', $pembayaran->pedagang_id) ? 'selected' : '' }}>{{ $option->nama }}</option>
+                                            <option value="{{ $option->id }}" {{ $option->id == old('pedagang_id', $pembayaran->pedagang_id) ? 'selected' : '' }}>{{ $option->nama }} ({{ $option->tempat->nama_tempat }} - {{ $option->position }})</option>
                                         @endforeach
                                     </select>
 
