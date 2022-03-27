@@ -128,8 +128,8 @@
         function addPengeluaran() {
             let id = (Math.random() + 1).toString(36) + Date.now();
             let namaPengeluaran = $('#nama-pengeluaran').val();
-            let jumlah          = $('#jumlah').val().replace(',', '');
-            let nominal         = $('#nominal').val().replace(',', '');
+            let jumlah          = $('#jumlah').val().replaceAll(',', '');
+            let nominal         = $('#nominal').val().replaceAll(',', '');
 
             let total = jumlah * nominal;
 

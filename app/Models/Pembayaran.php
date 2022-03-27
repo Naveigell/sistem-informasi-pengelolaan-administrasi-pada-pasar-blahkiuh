@@ -38,6 +38,11 @@ class Pembayaran extends Model
         return $this->hasOne(Kwitansi::class);
     }
 
+    public function isTunai()
+    {
+        return !$this->bukti_pembayaran;
+    }
+
     public static function getDefaultValues()
     {
         return (object) [

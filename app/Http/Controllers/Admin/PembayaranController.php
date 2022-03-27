@@ -8,6 +8,7 @@ use App\Models\Kwitansi;
 use App\Models\Pedagang;
 use App\Models\Pemasukan;
 use App\Models\Pembayaran;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -91,7 +92,35 @@ class PembayaranController extends Controller
 
         }
 
-        $pembayaran = Pembayaran::create($input);
+        /** @var Model $pembayaran */
+        $pembayaran = Pembayaran::query()->create($input);
+        $pembayaran->load('kategori');
+
+        if (($pembayaran->kategori->is_automatic) &&
+            ($pembayaran->status === "Acc")) {
+
+            Pemasukan::query()->create([
+                "pedagang_id" => $pembayaran->pedagang_id,
+                "kategori_id" => $pembayaran->kategori_id,
+                "keterangan" => $pembayaran->keterangan,
+                "nominal" => $pembayaran->nominal,
+                "tgl" => $pembayaran->tgl,
+                "user_id" => auth('web')->id(),
+            ]);
+
+            if ($pembayaran->isTunai()) {
+
+                Kwitansi::query()->create([
+                    "pembayaran_id" => $pembayaran->id,
+                    "pedagang_id" => $pembayaran->pedagang_id,
+                    "tgl" => $pembayaran->tgl,
+                    "nominal" => $pembayaran->nominal,
+                    "keterangan" => $pembayaran->kategori->nama_kategori,
+                ]);
+
+            }
+
+        }
 
         return redirect(route($redirect, ["type" => $pembayaran->bukti_pembayaran ? "non-tunai" : "tunai"]))->with('success', 'Berhasil menambah data pembayaran');
     }
@@ -143,19 +172,22 @@ class PembayaranController extends Controller
                     "pedagang_id" => $pembayaran->pedagang_id,
                     "kategori_id" => $pembayaran->kategori_id,
                     "nominal" => $pembayaran->nominal,
+                    "keterangan" => $pembayaran->keterangan,
                     "tgl" => $pembayaran->tgl,
                     "user_id" => auth('web')->id(),
                 ]);
 
             }
 
-            Kwitansi::query()->create([
-                "pembayaran_id" => $pembayaran->id,
-                "pedagang_id" => $pembayaran->pedagang_id,
-                "tgl" => $pembayaran->tgl,
-                "nominal" => $pembayaran->nominal,
-                "keterangan" => $pembayaran->kategori->nama_kategori,
-            ]);
+            if ($pembayaran->isTunai()) {
+                Kwitansi::query()->create([
+                    "pembayaran_id" => $pembayaran->id,
+                    "pedagang_id" => $pembayaran->pedagang_id,
+                    "tgl" => $pembayaran->tgl,
+                    "nominal" => $pembayaran->nominal,
+                    "keterangan" => $pembayaran->kategori->nama_kategori,
+                ]);
+            }
 
         } else if ($request->status == 2) {
             $text = 'menolak';
