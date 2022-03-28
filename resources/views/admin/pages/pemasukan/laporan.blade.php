@@ -22,7 +22,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-6">
-                                        <label>Jenis Cukai</label>
+                                        <label>Tipe Laporan</label>
                                         <select name="jenis_cukai" class="form-select select2" id="jenis_cukai">
                                             <option value="">Pilih</option>
                                             <option value="harian" {{ request('jenis_cukai') == 'harian' ? 'selected' : '' }}>Harian</option>

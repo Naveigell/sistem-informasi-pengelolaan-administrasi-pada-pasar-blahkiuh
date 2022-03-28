@@ -21,7 +21,6 @@
                                 <th>Jenis Tagihan</th>
                                 <th>Pedagang</th>
                                 <th>Nominal</th>
-                                <th>Lunas</th>
 {{--                                <th>Action</th>--}}
                             </tr>
                             </thead>
@@ -33,13 +32,6 @@
                                         <td>{{ $tagihan->tempatKategori->nama_kategori }}</td>
                                         <td>{{ $tagihan->pedagang->nama }}</td>
                                         <td>Rp. {{ number_format($tagihan->nominal, 0, ',', '.') }}</td>
-                                        <td>
-                                            @if($tagihan->is_lunas)
-                                                <span class="badge badge-success">Lunas</span>
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
 {{--                                        <td>--}}
 {{--                                            <form action="{{ route('admin.tagihans.destroy', $tagihan) }}" method="post">--}}
 {{--                                                @csrf--}}

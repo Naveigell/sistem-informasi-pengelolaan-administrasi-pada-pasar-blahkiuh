@@ -15,7 +15,7 @@
                                 <th>Nama Pengeluaran</th>
                                 <th>Tgl</th>
                                 <th>Jumlah</th>
-                                <th>Nominal</th>
+                                <th>Harga Satuan</th>
                                 <th>User</th>
                             </tr>
                             </thead>
