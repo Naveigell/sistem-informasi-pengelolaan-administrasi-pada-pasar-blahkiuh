@@ -16,6 +16,7 @@
                                 <th>Tgl</th>
                                 <th>Jumlah</th>
                                 <th>Harga Satuan</th>
+                                <th>Total</th>
                                 <th>User</th>
                             </tr>
                             </thead>
@@ -27,6 +28,7 @@
                                     <td>{{ $row->tgl }}</td>
                                     <td>{{ $row->jumlah }}</td>
                                     <td>Rp. {{ number_format($row->nominal) }}</td>
+                                    <td>Rp. {{ number_format($row->nominal * $row->jumlah) }}</td>
                                     <td>{{ $row->user->nama }}</td>
                                 </tr>
 
