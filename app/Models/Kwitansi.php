@@ -55,6 +55,11 @@ class Kwitansi extends Model
         $this->attributes['no_kwitansi'] = 'KW-' . str_repeat('0', 4 - strlen((string) $index)) . $index;
     }
 
+    public function pembayaran()
+    {
+        return $this->belongsTo(Pembayaran::class);
+    }
+
     public function pedagang()
     {
         return $this->belongsTo('App\Models\Pedagang');

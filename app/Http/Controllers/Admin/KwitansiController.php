@@ -62,7 +62,7 @@ class KwitansiController extends Controller
      */
     public function show($id)
     {
-        $data['kwitansi'] = Kwitansi::find($id);
+        $data['kwitansi'] = Kwitansi::with('pembayaran.pedagang')->find($id);
         $pdf = App::make('dompdf.wrapper');
         $pdf->setPaper('a5', 'landscape');
         $pdf->loadView('admin.pages.kwitansi.show', $data);

@@ -40,7 +40,7 @@ class Pembayaran extends Model
 
     public function kwitansi()
     {
-        return $this->hasOne(Kwitansi::class);
+        return $this->hasOne(Kwitansi::class, 'pembayaran_id');
     }
 
     public function isTunai()

@@ -30,7 +30,7 @@
                 <tr>
                     <td>Sudah diterima dari</td>
                     <td>:</td>
-                    <td>{{ $kwitansi->pedagang->nama }}</td>
+                    <td>{{ $kwitansi->pembayaran->pedagang->nama }}</td>
                 </tr>
                 <tr>
                     <td>Uang sebesar</td>

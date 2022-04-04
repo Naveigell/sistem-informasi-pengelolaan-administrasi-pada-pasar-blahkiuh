@@ -63,12 +63,6 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->routeIs('admin.kwitansi.index') ? 'active' : '' }}" href="{{ route('admin.kwitansi.index') }}" aria-expanded="false">
-                                <i class="fa fa-paperclip"></i>
-                                <span class="hide-menu">Kwitansi</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
                             <a class="sidebar-link has-arrow waves-effect waves-dark {{ request()->routeIs('admin.pembayaran.index') ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                                 <i class="fa fa-hand-holding"></i>
                                 <span class="hide-menu">Pembayaran</span>
