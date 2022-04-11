@@ -23,6 +23,7 @@ class Pedagang extends Authenticatable
         'tgl_bergabung',
         'alamat',
         'jenis_dagangan',
+        'status',
     ];
 
     public static function getDefaultValues()
@@ -36,6 +37,7 @@ class Pedagang extends Authenticatable
             'tgl_bergabung' => '',
             'alamat' => '',
             'jenis_dagangan' => '',
+            'status' => '',
         ];
     }
 
@@ -47,8 +49,21 @@ class Pedagang extends Authenticatable
     public function setTempatIdAttribute($value)
     {
         if (request()->isMethod('post')) {
-            $max = Pedagang::query()->where('tempat_id', $value)->max('position');
-            $this->attributes['position']  = $max ? $max + 1 : 1;
+
+            $positions = Pedagang::query()->where('status', 'active')->where('tempat_id', 1)->orderBy('position')->pluck('position');
+
+            if ($positions->count() > 0) {
+                $index     = 1;
+
+                while ($positions->contains($index)) {
+                    $index++;
+                }
+
+                $this->attributes['position'] = $index;
+
+            } else {
+                $this->attributes['position'] = 1;
+            }
         }
 
         $this->attributes['tempat_id'] = $value;

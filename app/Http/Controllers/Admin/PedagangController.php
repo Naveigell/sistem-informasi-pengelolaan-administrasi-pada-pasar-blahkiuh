@@ -16,7 +16,7 @@ class PedagangController extends Controller
      */
     public function index()
     {
-        $data['pedagang'] = Pedagang::with('tempat')->orderBy('nama')->get();
+        $data['pedagang'] = Pedagang::with('tempat')->where('status', 'active')->orderBy('nama')->get();
 
         return view('admin.pages.pedagang.index', $data);
     }
@@ -100,6 +100,7 @@ class PedagangController extends Controller
             'no_telp' => 'required',
             'tgl_bergabung' => 'required',
             'jenis_dagangan' => 'required',
+            'status' => 'required|string|in:active,nonactive',
         ]);
 
         $input = $request->toArray();

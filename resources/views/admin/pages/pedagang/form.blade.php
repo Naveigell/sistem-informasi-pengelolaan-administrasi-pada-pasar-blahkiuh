@@ -116,6 +116,24 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end">Status</label>
+
+                            <div class="col-md-6">
+                                <select name="status" id="" class="form-control @error('status') is-invalid @enderror">
+                                    <option value="">-- Nothing Selected --</option>
+                                    <option @if ($pedagang->status == 'active') selected @endif value="active">Active</option>
+                                    <option @if ($pedagang->status == 'nonactive') selected @endif value="nonactive">Non Active</option>
+                                </select>
+
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <div class="col-md-8 offset-md-4">
                                 <input type="submit" value="Simpan" class="btn btn-primary">
                             </div>
