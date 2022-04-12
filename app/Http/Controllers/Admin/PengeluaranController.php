@@ -51,6 +51,7 @@ class PengeluaranController extends Controller
             'jumlah.*' => 'required|integer|min:1',
             'nominal' => 'required|array',
             'nominal.*' => 'required|integer|min:1',
+            'keterangan' => 'required|string|max:350',
         ]);
 
         $input = $request->toArray();
@@ -66,6 +67,7 @@ class PengeluaranController extends Controller
 
                 return $output + ($item * $input['jumlah'][$index++]);
             }, 0),
+            "keterangan" => $input['keterangan'],
         ]);
         $groupPengeluaran->save();
 

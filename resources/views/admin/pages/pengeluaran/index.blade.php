@@ -19,6 +19,7 @@
                                 <th>#</th>
                                 <th>No Invoice</th>
                                 <th>Tgl</th>
+                                <th>Keterangan</th>
                                 <th>Sub Total</th>
                                 @if(auth()->user()->level == 'Admin/Bendahara')
                                     <th>Aksi</th>
@@ -31,6 +32,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->no_invoice }}</td>
                                     <td>{{ $row->tgl }}</td>
+                                    <td>{{ $row->keterangan ?? '-' }}</td>
                                     <td>Rp. {{ number_format($row->sub_total) }}</td>
                                     @if(auth()->user()->level == 'Admin/Bendahara')
                                         <td>

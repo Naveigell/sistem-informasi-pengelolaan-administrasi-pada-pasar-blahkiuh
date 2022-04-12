@@ -73,45 +73,57 @@
                     <div class="card-header">Data Pengeluaran</div>
 
                     <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Nama Pengeluaran</th>
-                                        <th>Jumlah</th>
-                                        <th>Nominal</th>
-                                        <th>Total</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="pengeluaran-container">
-                                    @if(count($errors) > 0)
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nama Pengeluaran</th>
+                                    <th>Jumlah</th>
+                                    <th>Nominal</th>
+                                    <th>Total</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pengeluaran-container">
+                                @if(count($errors) > 0)
 
-                                        @foreach(session()->getOldInput('nama_pengeluaran') as $pengeluaran)
-                                            @php
-                                                $bytes = random_bytes(8);
-                                            @endphp
-                                            <tr id="row-{{ $bytes }}">
-                                                <td>
-                                                    <input type="text" name="nama_pengeluaran[]" class="form-control" readonly value="{{ $pengeluaran }}">
-                                                </td>
-                                                <td>
-                                                    <input type="number" name="jumlah[]" class="form-control" readonly value="{{ session()->getOldInput('jumlah')[$loop->index] }}">
-                                                </td>
-                                                <td>
-                                                    <input type="number" name="nominal[]" class="form-control" readonly value="{{ session()->getOldInput('nominal')[$loop->index] }}">
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control" readonly value="{{ session()->getOldInput('nominal')[$loop->index] * session()->getOldInput('jumlah')[$loop->index] }}">
-                                                </td>
-                                                <td>
-                                                    <button type="button" data-row-id="row-{{ $bytes }}" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                    @foreach(session()->getOldInput('nama_pengeluaran') as $pengeluaran)
+                                        @php
+                                            $bytes = random_bytes(8);
+                                        @endphp
+                                        <tr id="row-{{ $bytes }}">
+                                            <td>
+                                                <input type="text" name="nama_pengeluaran[]" class="form-control" readonly value="{{ $pengeluaran }}">
+                                            </td>
+                                            <td>
+                                                <input type="number" name="jumlah[]" class="form-control" readonly value="{{ session()->getOldInput('jumlah')[$loop->index] }}">
+                                            </td>
+                                            <td>
+                                                <input type="number" name="nominal[]" class="form-control" readonly value="{{ session()->getOldInput('nominal')[$loop->index] }}">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control" readonly value="{{ session()->getOldInput('nominal')[$loop->index] * session()->getOldInput('jumlah')[$loop->index] }}">
+                                            </td>
+                                            <td>
+                                                <button type="button" data-row-id="row-{{ $bytes }}" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
-                                    @endif
-                                </tbody>
-                            </table>
+                                @endif
+                            </tbody>
+                        </table>
+
+                        <hr>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="keterangan">Keterangan</label>
+                                    <textarea name="keterangan" id="keterangan" cols="30" rows="10"
+                                              class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-info">Simpan</button>
