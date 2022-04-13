@@ -16,6 +16,7 @@
                                 <th>Jenis Tagihan</th>
                                 <th>Pedagang</th>
                                 <th>Nominal</th>
+                                <th>Lunas</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -27,6 +28,13 @@
                                     <td>{{ $tagihan->tempatKategori->nama_kategori }}</td>
                                     <td>{{ $tagihan->pedagang->nama }}</td>
                                     <td>Rp. {{ number_format($tagihan->nominal, 0, ',', '.') }}</td>
+                                    <td>
+                                        @if($tagihan->is_lunas)
+                                            <span class="badge badge-success"></span>
+                                        @else
+                                            <span class="badge badge-danger"></span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <button class="btn btn-sm btn-success btn-tunai">Tunai</button>
                                         <button class="btn btn-sm btn-warning btn-nontunai">Non Tunai</button>
