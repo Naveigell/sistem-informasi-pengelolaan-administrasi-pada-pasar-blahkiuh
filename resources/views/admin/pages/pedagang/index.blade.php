@@ -23,6 +23,7 @@
                                 <th>No. Telp</th>
                                 <th>Tgl. Bergabung</th>
                                 <th>Jenis Dagangan</th>
+                                <th>Status</th>
                                 @if(auth()->user()->level == 'Admin/Bendahara')
                                     <th>Aksi</th>
                                 @endif
@@ -38,6 +39,13 @@
                                     <td>{{ $row->no_telp }}</td>
                                     <td>{{ $row->tgl_bergabung }}</td>
                                     <td>{{ $row->jenis_dagangan }}</td>
+                                    <td>
+                                        @if ($row->status === 'nonactive')
+                                            <span class="badge badge-danger">Non Aktif</span>
+                                        @else
+                                            <span class="badge badge-success">Aktif</span>
+                                        @endif
+                                    </td>
                                     @if(auth()->user()->level == 'Admin/Bendahara')
                                     <td>
                                         <form action="{{ route('admin.pedagang.destroy', $row->id) }}" method="post">

@@ -16,7 +16,7 @@ class PedagangController extends Controller
      */
     public function index()
     {
-        $data['pedagang'] = Pedagang::with('tempat')->where('status', 'active')->orderBy('nama')->get();
+        $data['pedagang'] = Pedagang::with('tempat')->orderBy('nama')->get();
 
         return view('admin.pages.pedagang.index', $data);
     }
@@ -53,7 +53,6 @@ class PedagangController extends Controller
         ]);
 
         $input = $request->toArray();
-        $input['password'] = bcrypt($input['password']);
 
         Pedagang::create($input);
 
@@ -107,7 +106,7 @@ class PedagangController extends Controller
         if(empty($input['password'])) {
             unset($input['password']);
         } else {
-            $input['password'] = bcrypt($input['password']);
+//            $input['password'] = bcrypt($input['password']);
         }
 
         Pedagang::findOrfail($id)->update($input);
