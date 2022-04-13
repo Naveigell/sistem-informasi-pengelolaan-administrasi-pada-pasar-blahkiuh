@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pedagang;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pedagang;
 use App\Models\Pemasukan;
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
@@ -16,7 +17,9 @@ class PengeluaranController extends Controller
      */
     public function index()
     {
-        $pengeluaran = Pemasukan::with('pedagang')->where('pedagang_id', auth()->id())->orderBy('tgl');
+        $lastMerchants = Pedagang::query()->where('tempat_id', auth()->user()->tempat_id)->where('position', auth()->user()->position)->pluck('id');
+
+        $pengeluaran = Pemasukan::with('pedagang')->where('pedagang_id', auth()->id())->orWhereIn('pedagang_id', $lastMerchants->toArray())->orderBy('tgl');
 
         if (\request()->filled('from') && \request()->filled('to')) {
             $pengeluaran->whereBetween('tgl', [\request()->query('from'), \request()->query('to')]);
